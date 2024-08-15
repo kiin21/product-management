@@ -1,5 +1,18 @@
 extend ../../layouts/default.pug
+include ../../mixins/box-head.pug
+block main 
+    .container.my-3 
+        .row 
+            .col-12 
+                +box-head('Product list')
 
-block main
-    h1 Products
-    p Welcome to the products page
+        .row 
+            .col-4.mb-3 
+                .product-item 
+                    .inner-image 
+                        img(src='https://cdn2.fptshop.com.vn/unsafe/384x0/filters:quality(100)/2023_9_15_638303935769505085_iphone-15-xanh-1.jpg' alt='iPhone 15')
+                    .inner-content
+                        h3.inner-title iPhone 15
+                        .inner-price-new $900
+                        .inner-price-old $1,000
+                        .inner-discount 10% off

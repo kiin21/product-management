@@ -7,12 +7,13 @@ block main
                 +box-head('Product list')
 
         .row 
-            .col-4.mb-3 
-                .product-item 
-                    .inner-image 
-                        img(src='https://cdn2.fptshop.com.vn/unsafe/384x0/filters:quality(100)/2023_9_15_638303935769505085_iphone-15-xanh-1.jpg' alt='iPhone 15')
-                    .inner-content
-                        h3.inner-title iPhone 15
-                        .inner-price-new $900
-                        .inner-price-old $1,000
-                        .inner-discount 10% off
+            each item in products 
+                .col-4.mb-3 
+                    .product-item 
+                        .inner-image 
+                            img(src=item.thumbnail, alt=item.title)
+                        .inner-content
+                            h3.inner-title #{item.title}
+                            .inner-price-new $#{item.price}
+                            .inner-price-old $#{item.newPrice}
+                            .inner-discount #{item.discountPercentage}% off

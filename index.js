@@ -1,5 +1,8 @@
 const express = require('express');
-const router = require('./routers/client/index.router.js');
+
+const routerAdmin = require('./routers/admin/index.router.js');
+const routerClient = require('./routers/client/index.router.js');
+
 const database = require('./config/database.js');
 const app = express();
 require('dotenv').config();
@@ -11,7 +14,9 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 app.use(express.static('public'));
 
-router(app);
+routerClient(app);
+routerAdmin(app);
+
 
 // app.get('/', (req, res) => {
 //     res.render("client/pages/home/index");

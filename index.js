@@ -2,6 +2,7 @@ const express = require('express');
 
 const routerAdmin = require('./routers/admin/index.router.js');
 const routerClient = require('./routers/client/index.router.js');
+const systemConfig = require('./config/system.js');
 
 const database = require('./config/database.js');
 const app = express();
@@ -10,10 +11,14 @@ const port = process.env.PORT;
 
 database.connect();
 
+//App local variables
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+
 app.set('views', './views');
 app.set('view engine', 'pug');
 app.use(express.static('public'));
 
+// Routers
 routerClient(app);
 routerAdmin(app);
 

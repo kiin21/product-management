@@ -1,5 +1,5 @@
 const pathAdmin = '/admin';
 
 module.exports = {
-    adminPrefix: pathAdmin
+    prefixAdmin: pathAdmin
 }

@@ -25,3 +25,30 @@ if (buttons.length > 0) {
 }
 
 // End Button status
+
+
+// search form
+
+const searchForm = document.querySelector("#searchForm");
+
+if (searchForm) {
+
+    searchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        let url = new URL(window.location.href);
+        const keyword = event.target.elements.keyword.value;
+
+
+        if (keyword) {
+            url.searchParams.set("keyword", keyword);
+
+        } else {
+            url.searchParams.delete("keyword");
+        }
+        window.location.href = url.href;
+    })
+}
+
+
+// end search form

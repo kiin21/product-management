@@ -1,23 +1,36 @@
 const Product = require("../../models/product.model");
 
 module.exports.products = async (req, res) => {
-    let products = await Product.find({});
 
-    console.log(products);
+    let query = req.query;
 
-    products.forEach(element => {
-        if (element.stock === 0) {
-            element.status = "out of stock";
+    let filter = {};
+    if (req.query.status) {
+        filter.status = query.status;
+    }
+
+    let filterBar = [
+        { name: "All", status: "", class: "" },
+        { name: "Avaiable", status: "available", class: "" },
+        { name: "Unavaiable", status: "unavailable", class: "" }
+    ]
+
+    if (req.query.status) {
+        for (let element of filterBar) {
+            if (element.status === req.query.status) {
+                element.class = "active";
+                break;
+            }
         }
-        else if (element.stock < 10) {
-            element.status = "low stock";
-        }
-        else {
-            element.status = "in stock";
-        }
-    });
+    }
+    else{
+        filterBar[0].class = "active";
+    }
+
+    let products = await Product.find(filter);
 
     res.render("admin/pages/products/index", {
-        products: products
+        products: products,
+        filterBar: filterBar
     });
 }

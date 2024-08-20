@@ -5,14 +5,22 @@ module.exports.products = async (req, res) => {
     let query = req.query;
 
     let filter = {};
+
     if (req.query.status) {
         filter.status = query.status;
     }
 
+    let keyword = "";
+    if (req.query.keyword) {
+        keyword = req.query.keyword;
+        let regex = new RegExp(keyword, "i");
+        filter.title = regex;
+    }
+
     let filterBar = [
         { name: "All", status: "", class: "" },
-        { name: "Avaiable", status: "available", class: "" },
-        { name: "Unavaiable", status: "unavailable", class: "" }
+        { name: "Available", status: "available", class: "" },
+        { name: "Unavailable", status: "unavailable", class: "" }
     ]
 
     if (req.query.status) {
@@ -23,7 +31,7 @@ module.exports.products = async (req, res) => {
             }
         }
     }
-    else{
+    else {
         filterBar[0].class = "active";
     }
 
@@ -31,6 +39,7 @@ module.exports.products = async (req, res) => {
 
     res.render("admin/pages/products/index", {
         products: products,
-        filterBar: filterBar
+        filterBar: filterBar,
+        keyword: keyword
     });
 }

@@ -22,6 +22,7 @@ block main
                                 placeholder="Search..."
                                 name="keyword"
                                 class="form-control"
+                                value=keyword?keyword:''
                             )
                             .input-group-append 
                                 button(
@@ -46,7 +47,7 @@ block main
                 tbody
                     each product, index in products
                         tr 
-                            td index+1
+                            td #{index+1}
                             td 
                                 img(src=product.thumbnail alt=product.description width="100px" height="auto")
 
@@ -54,9 +55,9 @@ block main
                             td #{product.price}$
                             td
                                 if product.status === 'available'
-                                    a(href='#' class='badge bg-success') available
+                                    a(href='#' class='badge bg-success') Available
                                 else
-                                    a(href='#' class='badge bg-danger') unavailable
+                                    a(href='#' class='badge bg-danger') Unavailable
                             td
                                 button(class='btn btn-warning btn-sm me-1') Edit
                                 button(class='btn btn-danger btn-sm') Delete

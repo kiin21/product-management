@@ -51,19 +51,22 @@ if (searchForm) {
 
 // pagination
 const btnPagination = document.querySelectorAll('.page-link');
-btnPagination.forEach(btn => {
-    btn.addEventListener("click", (event) => {
 
-        event.preventDefault();
-        let url = new URL(window.location.href);
-        const page = btn.getAttribute("button-pagination");
+if (btnPagination.length !== 0) {
+    btnPagination.forEach(btn => {
+        btn.addEventListener("click", (event) => {
 
-        if (page) {
-            url.searchParams.set("page", page);
-        } else {
-            url.searchParams.delete("page");
-        }
-        window.location.href = url.href;
+            event.preventDefault();
+            let url = new URL(window.location.href);
+            const page = btn.getAttribute("button-pagination");
+
+            if (page) {
+                url.searchParams.set("page", page);
+            } else {
+                url.searchParams.delete("page");
+            }
+            window.location.href = url.href;
+        });
     });
-});
+}
 // end pagination

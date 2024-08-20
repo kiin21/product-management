@@ -1,5 +1,6 @@
 const Product = require("../../models/product.model");
-const filterBar = require("../../helpers/filter");
+const filterBarHelper = require("../../helpers/filter");
+const searchHelper = require("../../helpers/search");
 
 module.exports.products = async (req, res) => {
 
@@ -11,20 +12,21 @@ module.exports.products = async (req, res) => {
         filter.status = query.status;
     }
 
-    let keyword = "";
-    if (query.keyword) {
-        keyword = query.keyword;
-        let regex = new RegExp(keyword, "i");
-        filter.title = regex;
+    let searchObj = searchHelper(query);
+
+    if (searchObj.regex) {
+        filter.title = searchObj.regex;
     }
 
-    let filterStatus = filterBar(query);
-
     let products = await Product.find(filter);
+
+    let filterStatus = filterBarHelper(query);
+
+
 
     res.render("admin/pages/products/index", {
         products: products,
         filterBar: filterStatus,
-        keyword: keyword
+        keyword: searchObj.keyword
     });
 }

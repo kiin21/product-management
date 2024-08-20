@@ -28,7 +28,6 @@ if (buttons.length > 0) {
 
 
 // search form
-
 const searchForm = document.querySelector("#searchForm");
 
 if (searchForm) {
@@ -39,7 +38,6 @@ if (searchForm) {
         let url = new URL(window.location.href);
         const keyword = event.target.elements.keyword.value;
 
-
         if (keyword) {
             url.searchParams.set("keyword", keyword);
 
@@ -49,6 +47,23 @@ if (searchForm) {
         window.location.href = url.href;
     })
 }
-
-
 // end search form
+
+// pagination
+const btnPagination = document.querySelectorAll('.page-link');
+btnPagination.forEach(btn => {
+    btn.addEventListener("click", (event) => {
+
+        event.preventDefault();
+        let url = new URL(window.location.href);
+        const page = btn.getAttribute("button-pagination");
+
+        if (page) {
+            url.searchParams.set("page", page);
+        } else {
+            url.searchParams.delete("page");
+        }
+        window.location.href = url.href;
+    });
+});
+// end pagination

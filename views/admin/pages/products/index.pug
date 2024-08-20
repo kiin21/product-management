@@ -44,3 +44,12 @@ block main
                             td
                                 button(class='btn btn-warning btn-sm me-1') Edit
                                 button(class='btn btn-danger btn-sm') Delete
+
+    div     
+        ul(class='pagination')
+            - for (let i = 1; i <= paginationObj.totalPages; i++) 
+                li(class=`page-item ${paginationObj.currentPage === i ? 'active' : ''}`)
+                    button(
+                        class='page-link'
+                        button-pagination=i
+                    ) #{i}

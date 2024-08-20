@@ -3,8 +3,9 @@
   background: #202020;
   padding: 10px 0;
   top: 0;
+  width: 100%;
   z-index: 999;
-  position: relative;
+  position: fixed;
 }
 
 .header
@@ -17,6 +18,10 @@
 /* end header */
 
 /* body */
+.body {
+  margin-top: 50px;
+  display: flex;
+}
 .body .sider {
   width: 150px;
   background: #100a0a;
@@ -40,6 +45,11 @@
 /* end body */
 
 /* sider */
+
+.sider {
+  margin-top: 5px;
+}
+
 .sider
   .inner-menu
   ul {

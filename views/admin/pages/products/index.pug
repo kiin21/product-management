@@ -1,4 +1,5 @@
 extend ../../layouts/default.pug
+include ../../mixins/filterBar
 
 block main 
     h1 Product list 
@@ -8,12 +9,7 @@ block main
         .card-body 
             .row 
                 .col-6
-                    each button in filterBar
-
-                        button(
-                            class=`btn btn-sm me-1 btn-outline-success ${button.class}`
-                            button-status=button.status
-                        ) #{button.name} 
+                    +filterBar(filterBar)
                 .col-6 
                     form(id='searchForm')
                         .input-group 

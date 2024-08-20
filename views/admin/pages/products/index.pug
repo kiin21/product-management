@@ -1,6 +1,6 @@
 extend ../../layouts/default.pug
 include ../../mixins/filterBar
-
+include ../../mixins/search
 block main 
     h1 Product list 
 
@@ -11,20 +11,7 @@ block main
                 .col-6
                     +filterBar(filterBar)
                 .col-6 
-                    form(id='searchForm')
-                        .input-group 
-                            input(
-                                type="text"
-                                placeholder="Search..."
-                                name="keyword"
-                                class="form-control"
-                                value=keyword?keyword:''
-                            )
-                            .input-group-append 
-                                button(
-                                    type="submit"
-                                    class="btn btn-success"
-                                ) Search
+                    +search(keyword)
 
     .card.mb-3
         .card-header List

@@ -17,10 +17,35 @@ block main
     .card.mb-3
         .card-header List
         .card-body 
+            Form(
+                method='POST'
+                id='change-multi-form'
+                action=`${prefixAdmin}/products/changes-multi-status?_method=PATCH`
+            )
+                .d-flex.align-items-start
+                    .form-group 
+                        select(name='status' class='form-select')
+                            option(value='available') Available
+                            option(value='unavailable') Unavailable
+                    .form-group 
+                        input(
+                            type="text"
+                            name="ids"
+                            class="form-control"
+                        )
+                    button(
+                        type='submit'
+                        class='btn btn-primary'
+                    ) Change status
 
             table.table.table.hover.table-sm 
                 thead
                     tr
+                        th 
+                            input(
+                                type='checkbox'
+                                id='check-all'
+                            )
                         th No
                         th Image
                         th Title
@@ -31,6 +56,12 @@ block main
                 tbody
                     each product, index in products
                         tr 
+                            td 
+                                input(
+                                    type='checkbox'
+                                    class='check-item'
+                                    value=product._id
+                                )
                             td #{index+1}
                             td 
                                 img(src=product.thumbnail alt=product.description width="100px" height="auto")

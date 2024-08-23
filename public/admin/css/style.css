@@ -70,3 +70,28 @@
     solid #5d5858;
 }
 /* end sider */
+
+/* change multi status */
+.d-flex.align-items-start {
+  display: flex;
+  align-items: start;
+  gap: 1rem; /* Adjust the gap between form elements as needed */
+}
+
+.d-flex.align-items-start
+  .form-group {
+  margin-bottom: 1rem; /* Adjust the margin as needed */
+}
+
+.d-flex.align-items-start
+  .form-select,
+.d-flex.align-items-start
+  .form-control {
+  width: 100%; /* Make the select and input elements take full width */
+}
+
+.d-flex.align-items-start
+  .btn-primary {
+  align-self: flex-start; /* Align the button to the start */
+}
+/* end change multi status */

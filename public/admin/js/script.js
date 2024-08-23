@@ -1,5 +1,3 @@
-console.log("Hello from script.js");
-
 // Button status
 const buttons = document.querySelectorAll("[button-status]");
 

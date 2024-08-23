@@ -3,6 +3,7 @@ const express = require('express');
 const routerAdmin = require('./routers/admin/index.router.js');
 const routerClient = require('./routers/client/index.router.js');
 const systemConfig = require('./config/system.js');
+const methodOverride = require('method-override')
 
 const database = require('./config/database.js');
 const app = express();
@@ -16,7 +17,8 @@ app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 app.set('views', './views');
 app.set('view engine', 'pug');
-app.use(express.static('public'));
+app.use(express.static('public')); 
+app.use(methodOverride('_method'))
 
 // Routers
 routerClient(app);

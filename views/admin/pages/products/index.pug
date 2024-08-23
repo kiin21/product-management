@@ -39,11 +39,29 @@ block main
                             td #{product.price}$
                             td
                                 if product.status === 'available'
-                                    a(href='#' class='badge bg-success') Available
+                                    a(
+                                        href='javascript:;'
+                                        btn-change-status
+                                        product-status=product.status
+                                        product-id=product._id 
+                                        class='badge bg-success'
+                                    ) Available
                                 else
-                                    a(href='#' class='badge bg-danger') Unavailable
+                                    a(
+                                        href='javascript:;'
+                                        btn-change-status
+                                        product-status=product.status
+                                        product-id=product._id
+                                        class='badge bg-danger'
+                                    ) Unavailable
                             td
                                 button(class='btn btn-warning btn-sm me-1') Edit
                                 button(class='btn btn-danger btn-sm') Delete
-   
+
     +pagination(paginationObj) 
+    form( 
+        method='POST'
+        id='change-status-form'
+        data-path=`${prefixAdmin}/products/change-status`
+    )
+    script(src='/admin/js/products.js')

@@ -2,6 +2,8 @@ extend ../../layouts/default.pug
 include ../../mixins/filterBar
 include ../../mixins/search
 include ../../mixins/pagination
+include ../../mixins/changeStatus
+
 block main 
     h1 Product list 
 
@@ -17,28 +19,12 @@ block main
     .card.mb-3
         .card-header List
         .card-body 
-            Form(
-                method='POST'
-                id='change-multi-form'
-                action=`${prefixAdmin}/products/changes-multi-status?_method=PATCH`
-            )
-                .d-flex.align-items-start
-                    .form-group 
-                        select(name='status' class='form-select')
-                            option(value='available') Available
-                            option(value='unavailable') Unavailable
-                    .form-group 
-                        input(
-                            type="text"
-                            name="ids"
-                            class="form-control"
-                        )
-                    button(
-                        type='submit'
-                        class='btn btn-primary'
-                    ) Change status
+            +form-change-multi(`${prefixAdmin}/products/changes-multi-status?_method=PATCH`)
 
-            table.table.table.hover.table-sm 
+            table(
+                class='table table-hover table-sm' 
+                id='check-multi'
+            )
                 thead
                     tr
                         th 
@@ -60,6 +46,7 @@ block main
                                 input(
                                     type='checkbox'
                                     class='check-item'
+                                    id='check-item'
                                     value=product._id
                                 )
                             td #{index+1}

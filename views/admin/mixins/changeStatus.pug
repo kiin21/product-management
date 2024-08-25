@@ -1,0 +1,21 @@
+mixin form-change-multi(path)
+    Form(
+        method='POST'
+        id='change-multi-form'
+        action=path
+    )
+        .d-flex.align-items-start
+            .form-group 
+                select(name='status' class='form-select')
+                    option(value='available') Available
+                    option(value='unavailable') Unavailable
+            .form-group 
+                input(
+                    type="text"
+                    name="IDs"
+                    class="form-control d-none"
+                )
+            button(
+                type='submit'
+                class='btn btn-primary'
+            ) Change status

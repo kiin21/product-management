@@ -4,6 +4,7 @@ const routerAdmin = require('./routers/admin/index.router.js');
 const routerClient = require('./routers/client/index.router.js');
 const systemConfig = require('./config/system.js');
 const methodOverride = require('method-override')
+const bodyParser = require('body-parser');
 
 const database = require('./config/database.js');
 const app = express();
@@ -12,13 +13,17 @@ const port = process.env.PORT;
 
 database.connect();
 
+// create application/x-www-form-urlencoded parser
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 //App local variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 app.set('views', './views');
 app.set('view engine', 'pug');
-app.use(express.static('public')); 
-app.use(methodOverride('_method'))
+app.use(express.static('public'));
+app.use(methodOverride('_method'));
+app.use(bodyParser.urlencoded({ extended: false }))
 
 // Routers
 routerClient(app);

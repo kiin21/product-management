@@ -44,7 +44,7 @@ module.exports.products = async (req, res) => {
     });
 }
 
-// patch admin/products/change-status/:status/:ID
+// [patch] admin/products/change-status/:status/:ID
 module.exports.changeStatus = async (req, res) => {
     let status = req.params.status;
     let ID = req.params.ID;
@@ -54,13 +54,23 @@ module.exports.changeStatus = async (req, res) => {
     res.redirect('back');
 }
 
-// patch admin/products/changes-multi-status
+// [patch] admin/products/changes-multi-status
 module.exports.changeMultiStatus = async (req, res) => {
-    res.send("OK");
-    // let IDs = req.body.IDs;
-    // let status = req.body.status;
+    let IDs = req.body.IDs.split(', ');
+    let status = req.body.status;
 
-    // await Product.updateMany({ _id: { $in: IDs } }, { status: status });
+    console.log(IDs);
+    console.log(status);
 
-    // res.redirect('back');
+    switch (status) {
+        case 'available':
+            await Product.updateMany({ _id: { $in: IDs } }, { status: 'available' });
+            break;
+        case 'unavailable':
+            await Product.updateMany({ _id: { $in: IDs } }, { status: 'unavailable' });
+            break;
+        default:
+            break;
+    }
+    res.redirect('back');
 }

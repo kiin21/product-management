@@ -74,12 +74,23 @@ block main
                                     ) Unavailable
                             td
                                 button(class='btn btn-warning btn-sm me-1') Edit
-                                button(class='btn btn-danger btn-sm') Delete
+                                button(
+                                    class='btn btn-danger btn-sm'
+                                    id='btn-delete'
+                                    product-id=product._id
+                                    ) Delete
 
     +pagination(paginationObj) 
+    // form change multi status
     form( 
         method='POST'
         id='change-status-form'
         data-path=`${prefixAdmin}/products/change-status`
+    )
+    // form delete status
+    form(
+        method='POST'
+        id='delete-form'
+        data-path=`${prefixAdmin}/products/delete`
     )
     script(src='/admin/js/products.js')

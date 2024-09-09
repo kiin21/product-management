@@ -4,7 +4,7 @@ const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 
 // Get admin/products
-module.exports.products = async (req, res) => {
+module.exports.products = async(req, res) => {
     let query = req.query;
 
     //search
@@ -27,9 +27,9 @@ module.exports.products = async (req, res) => {
     let paginationObj = await paginationHelper(
         query,
         numberOfProducts, {
-        limitItems: 5,
-        currentPage: 1,
-    });
+            limitItems: 5,
+            currentPage: 1,
+        });
 
     //Retrieve products
     let products = await Product.find(filter)
@@ -45,7 +45,7 @@ module.exports.products = async (req, res) => {
 }
 
 // [patch] admin/products/change-status/:status/:ID
-module.exports.changeStatus = async (req, res) => {
+module.exports.changeStatus = async(req, res) => {
     let status = req.params.status;
     let ID = req.params.ID;
 
@@ -55,12 +55,10 @@ module.exports.changeStatus = async (req, res) => {
 }
 
 // [patch] admin/products/changes-multi-status
-module.exports.changeMultiStatus = async (req, res) => {
+module.exports.changeMultiStatus = async(req, res) => {
     let IDs = req.body.IDs.split(', ');
     let status = req.body.status;
 
-    console.log(IDs);
-    console.log(status);
 
     switch (status) {
         case 'available':
@@ -72,5 +70,14 @@ module.exports.changeMultiStatus = async (req, res) => {
         default:
             break;
     }
+    res.redirect('back');
+}
+
+// [delete] admin/products/delete/:id
+module.exports.deleteItem = async(req, res) => {
+    let id = req.params.id;
+
+    await Product.deleteOne({ _id: id });
+
     res.redirect('back');
 }

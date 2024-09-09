@@ -60,8 +60,7 @@ if (formChangeMultiStatus) {
         if (checkMulti.length === 0) {
             alert("Please select at least one product");
             return;
-        }
-        else {
+        } else {
             let IDs = [];
             checkMulti.forEach(checkbox => {
                 IDs.push(checkbox.value);
@@ -77,3 +76,25 @@ if (formChangeMultiStatus) {
     });
 }
 // end form change multi status
+
+// add action for delete btn
+const deleteBtn = document.querySelectorAll('#btn-delete');
+if (deleteBtn.length !== 0) {
+    let deleteForm = document.querySelector('#delete-form');
+    let path = deleteForm.getAttribute('data-path');
+
+    deleteBtn.forEach(btn => {
+        btn.addEventListener('click', (event) => {
+
+            const isConfirm = confirm('Are you sure you want to delete this product?');
+            if (isConfirm) {
+                event.preventDefault();
+                let id = btn.getAttribute('product-id');
+                let action = path + `/${id}?_method=DELETE`;
+                deleteForm.setAttribute('action', action);
+                deleteForm.submit();
+            }
+        });
+    });
+}
+m

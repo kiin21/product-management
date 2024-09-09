@@ -61,6 +61,20 @@ if (formChangeMultiStatus) {
             alert("Please select at least one product");
             return;
         } else {
+
+            const typeChange = event.target.elements.status.value;
+
+            let confirmAction = true;
+
+            if (typeChange === 'delete-all') {
+                confirmAction = confirm("Are you sure you want to delete all selected products?");
+                if (!confirmAction) {
+                    return;
+                }
+            }
+
+
+
             let IDs = [];
             checkMulti.forEach(checkbox => {
                 IDs.push(checkbox.value);

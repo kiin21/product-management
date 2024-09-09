@@ -67,11 +67,15 @@ module.exports.changeMultiStatus = async (req, res) => {
         case 'unavailable':
             await Product.updateMany({ _id: { $in: IDs } }, { status: 'unavailable' });
             break;
+        case 'delete-all':
+            await Product.updateMany({ _id: { $in: IDs } }, { deleted: true });
         default:
             break;
     }
     res.redirect('back');
 }
+
+
 
 // [delete] admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {

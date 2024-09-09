@@ -7,8 +7,10 @@ mixin form-change-multi(path)
         .d-flex.align-items-start
             .form-group 
                 select(name='status' class='form-select')
+                    option(disabled selected) Select status
                     option(value='available') Available
                     option(value='unavailable') Unavailable
+                    option(value='delete-all') Delete all
             .form-group 
                 input(
                     type="text"

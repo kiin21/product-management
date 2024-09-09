@@ -147,3 +147,33 @@
 }
 
 /* end adjust position */
+
+/* Alerts */
+#alert-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999; /* Ensure it is above other elements */
+}
+
+.alert-hidden {
+  opacity: 0;
+  transition: opacity
+    0.5s ease-out;
+}
+
+[close-alert] {
+    cursor: pointer;
+    font-weight: bold;
+    color: #000;
+    background: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    line-height: 20px;
+    text-align: center;
+}
+/* End alerts  */

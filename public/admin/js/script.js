@@ -68,3 +68,23 @@ if (btnPagination.length !== 0) {
     });
 }
 // end pagination
+
+
+// alert message
+//show
+const alertMessage = document.querySelector("#alert-popup");
+if (alertMessage) {
+    let timeout = alertMessage.getAttribute("timeout");
+    console.log(alertMessage);
+    setTimeout(() => {
+        alertMessage.classList.add("alert-hidden");
+    }, timeout);
+}
+//close
+const closeAlert = document.querySelector("[close-alert]");
+if (closeAlert) {
+    closeAlert.addEventListener("click", () => {
+        alertMessage.classList.add("alert-hidden");
+    });
+}
+// end alert message

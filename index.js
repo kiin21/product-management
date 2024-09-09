@@ -1,8 +1,11 @@
 const express = require('express');
+const flash = require('express-flash');
 
 const routerAdmin = require('./routers/admin/index.router.js');
 const routerClient = require('./routers/client/index.router.js');
 const systemConfig = require('./config/system.js');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
 
@@ -25,6 +28,11 @@ app.use(express.static('public'));
 app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: false }))
 
+//flash
+app.use(cookieParser('my-unique-key'));
+app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(flash());
+
 // Routers
 routerClient(app);
 routerAdmin(app);
@@ -40,5 +48,5 @@ routerAdmin(app);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-    
+
 });

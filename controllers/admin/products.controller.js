@@ -47,12 +47,14 @@ module.exports.products = async (req, res) => {
 
 // [patch] admin/products/change-status/:status/:ID
 module.exports.changeStatus = async (req, res) => {
-    // let status = req.params.status;
-    // let ID = req.params.ID;
+    let status = req.params.status;
+    let ID = req.params.ID;
 
-    // await Product.updateOne({ _id: ID }, { status: status });
+    await Product.updateOne({ _id: ID }, { status: status });
 
-    // res.redirect('back');
+    req.flash('success', 'Change status successfully');
+
+    res.redirect('back');
 }
 
 // [patch] admin/products/changes-multi-status
@@ -64,12 +66,15 @@ module.exports.changeMultiStatus = async (req, res) => {
     switch (status) {
         case 'available':
             await Product.updateMany({ _id: { $in: IDs } }, { status: 'available' });
+            req.flash('success', `Change status of ${IDs.length} successfully`);
             break;
         case 'unavailable':
             await Product.updateMany({ _id: { $in: IDs } }, { status: 'unavailable' });
+            req.flash('success', `Change status of ${IDs.length} product(s) successfully`);
             break;
         case 'delete-all':
             await Product.updateMany({ _id: { $in: IDs } }, { deleted: true });
+            req.flash('success', `Delete successfully`);
             break;
         case 'change-position':
             for (const product of IDs) {

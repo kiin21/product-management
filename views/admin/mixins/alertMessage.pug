@@ -1,0 +1,8 @@
+mixin alertMessage(_timeout) 
+    - if (messages.success)
+        .message.info
+            div(
+                class='alert alert-success' 
+                id='alert-popup'
+                timeout=_timeout
+            ) #{messages.success} <span close-alert>x</span>

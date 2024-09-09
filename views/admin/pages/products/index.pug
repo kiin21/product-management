@@ -5,6 +5,7 @@ include ../../mixins/pagination
 include ../../mixins/changeStatus
 
 block main 
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css')
     h1 Product list 
 
     .card.mb-3
@@ -27,21 +28,28 @@ block main
             )
                 thead
                     tr
+                        th Position
                         th 
                             input(
                                 type='checkbox'
                                 id='check-all'
                             )
-                        th No
                         th Image
                         th Title
                         th Price
                         th Status 
                         th Action
 
-                tbody
+                tbody#sortable
                     each product, index in products
-                        tr 
+                        tr(data-id=product._id)
+                            td 
+                                input(
+                                    type='number'
+                                    style='width: 50px;'
+                                    name='position'
+                                    value=product.position
+                                )
                             td 
                                 input(
                                     type='checkbox'
@@ -49,10 +57,8 @@ block main
                                     id='check-item'
                                     value=product._id
                                 )
-                            td #{index+1}
                             td 
                                 img(src=product.thumbnail alt=product.description width="100px" height="auto")
-
                             td #{product.title}
                             td #{product.price}$
                             td
@@ -78,7 +84,7 @@ block main
                                     class='btn btn-danger btn-sm'
                                     id='btn-delete'
                                     product-id=product._id
-                                    ) Delete
+                                ) Delete
 
     +pagination(paginationObj) 
     // form change multi status

@@ -73,17 +73,20 @@ if (formChangeMultiStatus) {
                 }
             }
 
-
-
             let IDs = [];
             checkMulti.forEach(checkbox => {
-                IDs.push(checkbox.value);
+                let productId = checkbox.value;
+                if (typeChange === 'change-position') {
+                    let newPos = checkbox.closest('tr').querySelector('input[name="position"]').value;
+                    IDs.push(`${productId}-${newPos}`);
+                } else {
+                    IDs.push(productId);
+                }
             });
 
             const formIds = document.querySelector('input[name="IDs"]');
 
             formIds.value = IDs.join(', ');
-
             formChangeMultiStatus.submit();
         }
 
@@ -111,3 +114,5 @@ if (deleteBtn.length !== 0) {
         });
     });
 }
+
+

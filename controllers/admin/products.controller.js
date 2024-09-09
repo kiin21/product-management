@@ -3,7 +3,7 @@ const filterBarHelper = require("../../helpers/filter");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 
-// [Get] admin/products
+// [get] admin/products
 module.exports.products = async (req, res) => {
     let query = req.query;
 
@@ -33,6 +33,7 @@ module.exports.products = async (req, res) => {
 
     //Retrieve products
     let products = await Product.find(filter)
+        .sort({ position: 'asc' })
         .limit(paginationObj.limitItems)
         .skip((paginationObj.currentPage - 1) * paginationObj.limitItems);
 
@@ -46,12 +47,12 @@ module.exports.products = async (req, res) => {
 
 // [patch] admin/products/change-status/:status/:ID
 module.exports.changeStatus = async (req, res) => {
-    let status = req.params.status;
-    let ID = req.params.ID;
+    // let status = req.params.status;
+    // let ID = req.params.ID;
 
-    await Product.updateOne({ _id: ID }, { status: status });
+    // await Product.updateOne({ _id: ID }, { status: status });
 
-    res.redirect('back');
+    // res.redirect('back');
 }
 
 // [patch] admin/products/changes-multi-status
@@ -69,12 +70,20 @@ module.exports.changeMultiStatus = async (req, res) => {
             break;
         case 'delete-all':
             await Product.updateMany({ _id: { $in: IDs } }, { deleted: true });
+            break;
+        case 'change-position':
+            for (const product of IDs) {
+                let [id, position] = product.split('-');
+                position = parseInt(position);
+                await Product.updateOne({ _id: id }, { position: position });
+            }
+            break;
         default:
             break;
     }
+
     res.redirect('back');
 }
-
 
 
 // [delete] admin/products/delete/:id
@@ -91,3 +100,15 @@ module.exports.deleteItem = async (req, res) => {
 
     res.redirect('back');
 }
+
+// // [get] admin/products/configdb
+// module.exports.configDB = async (req, res) => {
+//     let products = await Product.find();
+
+//     // add position/index for each product
+//     for (let i = 0; i < products.length; i++) {
+//         await Product.updateOne({ _id: products[i]._id }, { position: i + 1 });
+//     }
+
+//     res.redirect('back');
+// }

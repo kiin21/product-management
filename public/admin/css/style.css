@@ -1,4 +1,5 @@
 /* header */
+
 .header {
   background: #202020;
   padding: 10px 0;
@@ -15,13 +16,16 @@
   font-weight: 700;
   color: #fff;
 }
+
 /* end header */
 
 /* body */
+
 .body {
   margin-top: 50px;
   display: flex;
 }
+
 .body .sider {
   width: 150px;
   background: #100a0a;
@@ -42,6 +46,7 @@
     100% - 150px
   );
 }
+
 /* end body */
 
 /* sider */
@@ -69,29 +74,76 @@
   border-bottom: 1px
     solid #5d5858;
 }
+
 /* end sider */
 
 /* change multi status */
+
 .d-flex.align-items-start {
   display: flex;
   align-items: start;
-  gap: 1rem; /* Adjust the gap between form elements as needed */
+  gap: 1rem;
+  /* Adjust the gap between form elements as needed */
 }
 
 .d-flex.align-items-start
   .form-group {
-  margin-bottom: 1rem; /* Adjust the margin as needed */
+  margin-bottom: 1rem;
+  /* Adjust the margin as needed */
 }
 
 .d-flex.align-items-start
   .form-select,
 .d-flex.align-items-start
   .form-control {
-  width: 100%; /* Make the select and input elements take full width */
+  width: 100%;
+  /* Make the select and input elements take full width */
 }
 
 .d-flex.align-items-start
   .btn-primary {
-  align-self: flex-start; /* Align the button to the start */
+  align-self: flex-start;
+  /* Align the button to the start */
 }
+
 /* end change multi status */
+
+/* adjust position */
+
+.btn-group-vertical.position-adjuster {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid
+    #ced4da;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.btn-group-vertical
+  .btn.btn-sm.btn-secondary {
+  background-color: white;
+  color: black;
+  padding: 5px;
+  border: none;
+  border-radius: 0px;
+}
+
+.btn-group-vertical
+  .btn.btn-sm.btn-secondary:not(
+    :last-child
+  ) {
+  border-bottom: 1px
+    solid #ced4da;
+}
+
+.btn-group-vertical
+  .btn.btn-sm.btn-secondary.position-indicator {
+  font-weight: bold;
+}
+
+.btn-group-vertical
+  .btn.btn-sm.btn-secondary:hover {
+  background-color: #f8f9fa;
+}
+
+/* end adjust position */

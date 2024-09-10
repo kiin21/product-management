@@ -142,9 +142,12 @@ module.exports.createItemPost = async (req, res) => {
         req.body.position = amount + 1;
     }
 
+    req.body.thumbnail = "/uploads/" + req.file.filename;
+
     let newProduct = new Product(req.body);
     await newProduct.save();
 
+    // console.log(req.file);
 
     res.redirect(`${systemConfig.prefixAdmin}/products`);
 }

@@ -8,8 +8,10 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
-
 const database = require('./config/database.js');
+
+
+
 const app = express();
 require('dotenv').config();
 const port = process.env.PORT;

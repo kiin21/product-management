@@ -24,9 +24,16 @@ block main
 
     .card.mb-3
         .card-header List
-        .card-body 
-            +form-change-multi(`${prefixAdmin}/products/changes-multi-status?_method=PATCH`)
-
+        .card-body
+            .row 
+                .col-8
+                    +form-change-multi(`${prefixAdmin}/products/changes-multi-status?_method=PATCH`)
+                .col-4 
+                    a(
+                        href=`${prefixAdmin}/products/create`
+                        class='btn btn-outline-success'
+                    ) Create new product
+                
             table(
                 class='table table-hover table-sm' 
                 id='check-multi'

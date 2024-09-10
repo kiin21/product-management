@@ -10,6 +10,10 @@ router.patch('/changes-multi-status', controller.changeMultiStatus);
 
 router.delete('/delete/:id', controller.deleteItem);
 
+router.get('/create', controller.createItem);
+
+router.post('/create', controller.createItemPost);
+
 // router.get('/configdb', controller.configDB);
 
 module.exports = router;

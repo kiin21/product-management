@@ -2,7 +2,7 @@ const Product = require("../../models/product.model");
 const filterBarHelper = require("../../helpers/filter");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
-
+const systemConfig = require('../../config/system');
 // [get] admin/products
 module.exports.products = async (req, res) => {
     let query = req.query;
@@ -36,6 +36,8 @@ module.exports.products = async (req, res) => {
         .sort({ position: 'asc' })
         .limit(paginationObj.limitItems)
         .skip((paginationObj.currentPage - 1) * paginationObj.limitItems);
+
+    console.log(products.length);
 
     res.render("admin/pages/products/index", {
         products: products,
@@ -117,3 +119,32 @@ module.exports.deleteItem = async (req, res) => {
 
 //     res.redirect('back');
 // }
+
+// [get] admin/products/create
+module.exports.createItem = async (req, res) => {
+    res.render(
+        "admin/pages/products/create",
+        {
+            pageTitle: "Create Product",
+        }
+    );
+}
+
+// [post] admin/products/create
+module.exports.createItemPost = async (req, res) => {
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    req.body.position = parseInt(req.body.position);
+
+    if (isNaN(req.body.position)) {
+        let amount = await Product.countDocuments();
+        req.body.position = amount + 1;
+    }
+
+    let newProduct = new Product(req.body);
+    await newProduct.save();
+
+
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
+}

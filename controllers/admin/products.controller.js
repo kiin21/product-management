@@ -133,16 +133,15 @@ module.exports.createItem = async (req, res) => {
 
 // [post] admin/products/create
 module.exports.createPost = async (req, res) => {
-
-
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
-    req.body.position = parseInt(req.body.position);
 
     if (isNaN(req.body.position)) {
         let amount = await Product.countDocuments();
         req.body.position = amount + 1;
+    } else {
+        req.body.position = parseInt(req.body.position);
     }
 
     if (req.file) {
@@ -155,4 +154,45 @@ module.exports.createPost = async (req, res) => {
     // console.log(req.file);
 
     res.redirect(`${systemConfig.prefixAdmin}/products`);
+}
+
+// [get] admin/products/edit/:id
+module.exports.editPost = async (req, res) => {
+    try {
+        let productId = req.params.id;
+
+        let product = await Product.findOne({ _id: productId, deleted: false });
+
+        res.render(
+            "admin/pages/products/edit",
+            {
+                pageTitle: "Edit Product",
+                product: product
+            }
+        );
+    } catch (err) {
+        req.flash('error', 'Product not found');
+        res.redirect(`${systemConfig.prefixAdmin}/products`);
+    }
+}
+// [patch] admin/products/edit/:id
+module.exports.editPostPatch = async (req, res) => {
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    req.body.position = parseInt(req.body.position);
+
+    if (req.file) {
+        req.body.thumbnail = "/uploads/" + req.file.filename;
+    }
+
+    try {
+        await Product.updateOne({ _id: req.params.id }, req.body);
+        req.flash('success', 'Edit product successfully');
+    } catch (err) {
+        req.flash('error', 'Edit product failed');
+    }
+
+    res.redirect(`back`);
+
 }

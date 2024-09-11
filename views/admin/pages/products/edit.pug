@@ -3,12 +3,12 @@ include ../../mixins/alertMessage
 
 block main
     +alertMessage(5000) 
-
-    h1(class="ab-4") Add new product 
+    
+    h1(class="ab-4") Edit product 
 
     Form(
-        action=`${prefixAdmin}/products/create`
-        id='form-create-product'
+        action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`
+        id='form-edit-product'
         method='POST'
         enctype="multipart/form-data"
     )
@@ -19,6 +19,7 @@ block main
                 class='form-control'
                 id='title'
                 name='title'
+                value=product.title
                 required
             )
         div(class='form-group')
@@ -28,7 +29,8 @@ block main
                 id='describe'
                 name='decription'
                 rows="5"
-            )
+                value=product.description
+            ) #{product.description}
         div(class='form-group')
             label(for='price') Price
             input(
@@ -36,7 +38,7 @@ block main
                 class='form-control'
                 id='price'
                 name='price'
-                required
+                value=product.price
             )
         div(class='form-group')
             label(for='discount') Discount Percentage (0%-100%)
@@ -45,11 +47,11 @@ block main
                 class='form-control'
                 id='discount'
                 name='discountPercentage'
-                value=0
+                value=product.discountPercentage
                 min=0
                 max=100
-                pattern='^\d+(\.\d+)?$' 
-            )   
+            )
+
         div(class='form-group')
             label(for='quantity') Quantity
             input(
@@ -57,7 +59,7 @@ block main
                 class='form-control'
                 id='stock'
                 name='stock'
-                value=0
+                value=product.stock
                 min=0
             )
         div(
@@ -76,9 +78,9 @@ block main
         div(image-preview-container)
             img(
                 upload-image-preview,
-                src='',
+                src=product.thumbnail,
                 alt='Image preview',
-
+                
             ) 
             button(
                 type='button',
@@ -98,6 +100,7 @@ block main
                 name='position'
                 placeholder='Auto increase'
                 min=1
+                value=product.position
             )
         div(class='form-group form-check form-check-inline')
             input(
@@ -105,7 +108,7 @@ block main
                 class='form-check-input'
                 id='statusActive'
                 name='status'
-                checked
+                checked= product.status === 'available' ? true : false
             )
             label(for='statusActive' class='form-check-label') Available 
         div(class='form-group form-check form-check-inline')
@@ -114,13 +117,14 @@ block main
                 class='form-check-input'
                 id='statusActive'
                 name='status'
+                checked=product.status === 'unavailable' ? true : false
             )
             label(for='statusActive' class='form-check-label') Unavailable
         div(class='form-group')
             button(
                 type='submit'
                 class='btn btn-primary'
-            ) Create
+            ) Update
 
 
     script(src="/admin/js/products.js")

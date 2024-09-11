@@ -26,4 +26,15 @@ router.post(
 
 // router.get('/configdb', controller.configDB);
 
+// [get] admin/products/edit/:id
+router.get('/edit/:id', controller.editPost);
+
+// [patch] admin/products/edit/:id
+router.patch(
+    '/edit/:id',  
+    upload.single('thumbnail'),
+    validatorCreateProduct.createPost,
+    controller.editPostPatch
+);
+
 module.exports = router;

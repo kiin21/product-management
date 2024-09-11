@@ -88,3 +88,28 @@ if (closeAlert) {
     });
 }
 // end alert message
+
+//preview image when upload
+let uploadImage = document.querySelector("[upload-image]");
+if (uploadImage) {
+    let uploadImgInput = document.querySelector("[upload-image-input]");
+    let uploadImgPreview = document.querySelector("[upload-image-preview]");
+
+    uploadImgInput.addEventListener("change", (e) => {
+        let file = e.target.files[0];
+
+        if (file) {
+            uploadImgPreview.src = URL.createObjectURL(file);
+        }
+
+        let btnClose = document.querySelector("[btn-close-preview-img]");
+        btnClose.classList.remove("d-none");
+        btnClose.addEventListener("click", () => {
+            uploadImgPreview.src = "";
+            uploadImgInput.value = "";
+            btnClose.classList.add("d-none");
+        });
+    });
+
+}
+

@@ -55,15 +55,35 @@ block main
                 value=0
                 min=0
             )
-        div(class='form-group') 
-            label(for='thumbnail') Image 
+        div(
+            class='form-group' 
+            upload-image
+        )
+            label(for='thumbnail') Image
             input(
                 type='file'
                 class='form-control'
                 id='thumbnail'
                 name='thumbnail'
                 accept='image/*'
+                upload-image-input
             )
+        div(image-preview-container)
+            img(
+                upload-image-preview,
+                src='',
+                alt='Image preview',
+                
+            ) 
+            button(
+                type='button',
+                class='d-none',
+                btn-close-preview-img
+                aria-label='Close'
+            )
+                span
+
+
         div(class='form-group') 
             label(for='position') Position 
             input(
@@ -96,4 +116,6 @@ block main
                 type='submit'
                 class='btn btn-primary'
             ) Create
+
+
     script(src="/admin/js/products.js")

@@ -37,4 +37,6 @@ router.patch(
     controller.editPostPatch
 );
 
+// [get] admin/products/detail/:id
+router.get('/detail/:id', controller.detail);
 module.exports = router;

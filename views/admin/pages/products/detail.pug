@@ -1,0 +1,42 @@
+extends ../../layouts/default.pug
+
+block main
+    if(product.title)
+        h1(class='ab-4') #{product.title}
+
+    if(product.price)
+        div(class='ab-4') Price: #{product.price}
+    
+    if(product.discountPercentage)
+        div(class='ab-4') Discount: #{product.discountPercentage}%
+    
+    if(product.stock)
+        div(class='ab-4') Quantity: #{product.stock}
+
+    if(product.thumbnail)
+        img(
+            src=product.thumbnail
+            alt=product.title
+            class='img-fluid'
+        )
+    
+    if(product.status)
+        div(class='ab-4')
+            span Status:
+            if(product.status==='available')
+                span(class='badge bg-success') Available
+            else
+                span(class='badge bg-danger') Unavailable
+
+    if(product.position)
+        div(class='ab-4') Position: #{product.position}
+
+    if(product.description)
+        div(class='ab-4') Description: #{product.description}
+
+    a(
+        class='btn btn-warning'
+        href=`${prefixAdmin}/products/edit/${product._id}`
+    ) Edit
+
+    script(src="/admin/js/products.js")

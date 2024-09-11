@@ -103,19 +103,23 @@ block main
             input(
                 type='radio'
                 class='form-check-input'
-                id='statusActive'
+                id='statusAvailable'
                 name='status'
-                checked
+                value='available'
+                checked=product.status === 'available' ? true : false
             )
-            label(for='statusActive' class='form-check-label') Available 
+            label(for='statusAvailable' class='form-check-label') Available 
+
         div(class='form-group form-check form-check-inline')
             input(
                 type='radio'
                 class='form-check-input'
-                id='statusActive'
+                id='statusUnavailable'
                 name='status'
+                value='unavailable'
+                checked=product.status === 'unavailable' ? true : false
             )
-            label(for='statusActive' class='form-check-label') Unavailable
+            label(for='statusUnavailable' class='form-check-label') Unavailable
         div(class='form-group')
             button(
                 type='submit'

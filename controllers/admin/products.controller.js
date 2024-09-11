@@ -177,6 +177,9 @@ module.exports.editPost = async (req, res) => {
 }
 // [patch] admin/products/edit/:id
 module.exports.editPostPatch = async (req, res) => {
+
+    console.log(req.body); 
+
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
@@ -195,4 +198,26 @@ module.exports.editPostPatch = async (req, res) => {
 
     res.redirect(`back`);
 
+}
+
+// [get] admin/products/detail/:id
+module.exports.detail = async (req, res) => {
+    try {
+        let productId = req.params.id;
+
+        let product = await Product.findOne({ _id: productId, deleted: false });
+
+        console.log(product);
+
+        res.render(
+            "admin/pages/products/detail",
+            {
+                pageTitle: product.title,
+                product: product
+            }
+        );
+    } catch (err) {
+        req.flash('error', 'Product not found');
+        res.redirect(`${systemConfig.prefixAdmin}/products`);
+    }
 }

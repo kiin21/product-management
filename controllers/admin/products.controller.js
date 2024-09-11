@@ -3,6 +3,7 @@ const filterBarHelper = require("../../helpers/filter");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require('../../config/system');
+
 // [get] admin/products
 module.exports.products = async (req, res) => {
     let query = req.query;
@@ -131,7 +132,9 @@ module.exports.createItem = async (req, res) => {
 }
 
 // [post] admin/products/create
-module.exports.createItemPost = async (req, res) => {
+module.exports.createPost = async (req, res) => {
+
+
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
@@ -142,7 +145,9 @@ module.exports.createItemPost = async (req, res) => {
         req.body.position = amount + 1;
     }
 
-    req.body.thumbnail = "/uploads/" + req.file.filename;
+    if (req.file) {
+        req.body.thumbnail = "/uploads/" + req.file.filename;
+    }
 
     let newProduct = new Product(req.body);
     await newProduct.save();

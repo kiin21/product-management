@@ -1,6 +1,9 @@
 extends ../../layouts/default.pug
+include ../../mixins/alertMessage
 
 block main
+    +alertMessage(5000) 
+    
     h1(class="ab-4") Add new product 
 
     Form(

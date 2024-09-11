@@ -6,3 +6,11 @@ mixin alertMessage(_timeout)
                 id='alert-popup'
                 timeout=_timeout
             ) #{messages.success} <span close-alert>x</span>
+
+    - if (messages.error)
+        .message.info
+            div(
+                class='alert alert-danger' 
+                id='alert-popup'
+                timeout=_timeout
+            ) #{messages.error} <span close-alert>x</span>

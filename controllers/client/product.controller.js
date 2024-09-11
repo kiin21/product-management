@@ -13,3 +13,22 @@ module.exports.index = async (req, res) => {
         products: newProducts
     });
 }
+
+module.exports.detail = async (req, res) => {
+    try {
+        let product = await Product.findOne(
+            { 
+                slug: req.params.slug, 
+                deleted: false,
+                // status: 'available'
+            });
+
+        res.render("client/pages/products/detail.pug", {
+            pageTitle: "Product detail",
+            product: product
+        });
+
+    } catch (err) {
+        res.render("/products")
+    }
+}

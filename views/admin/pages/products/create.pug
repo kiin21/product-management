@@ -39,17 +39,14 @@ block main
                 required
             )
         div(class='form-group')
-            label(for='discount') Discount Percentage (0%-100%)
+            label(for='discount') Discount 
             input(
-                type='text'  
+                type='number' 
                 class='form-control'
                 id='discount'
                 name='discountPercentage'
                 value=0
-                min=0
-                max=100
-                pattern='^\d+(\.\d+)?$' 
-            )   
+            )
         div(class='form-group')
             label(for='quantity') Quantity
             input(
@@ -103,23 +100,19 @@ block main
             input(
                 type='radio'
                 class='form-check-input'
-                id='statusAvailable'
+                id='statusActive'
                 name='status'
-                value='available'
-                checked=product.status === 'available' ? true : false
+                checked
             )
-            label(for='statusAvailable' class='form-check-label') Available 
-
+            label(for='statusActive' class='form-check-label') Available 
         div(class='form-group form-check form-check-inline')
             input(
                 type='radio'
                 class='form-check-input'
-                id='statusUnavailable'
+                id='statusActive'
                 name='status'
-                value='unavailable'
-                checked=product.status === 'unavailable' ? true : false
             )
-            label(for='statusUnavailable' class='form-check-label') Unavailable
+            label(for='statusActive' class='form-check-label') Unavailable
         div(class='form-group')
             button(
                 type='submit'

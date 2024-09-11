@@ -137,7 +137,7 @@ module.exports.createPost = async (req, res) => {
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
 
-    if (isNaN(req.body.position)) {
+    if (!req.body.position) {
         let amount = await Product.countDocuments();
         req.body.position = amount + 1;
     } else {

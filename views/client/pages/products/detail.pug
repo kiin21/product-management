@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug
+
+block main 
+    .container.my-3 
+        .row 
+            .col-12 
+                if(product.title)
+                    h1(class='ab-4') #{product.title}
+
+                if(product.price)
+                    div(class='ab-4') Price: <b>#{product.price}</b>
+
+                if(product.discountPercentage)
+                    div(class='ab-4') Discount: <b>#{product.discountPercentage}%</b>
+
+                if(product.stock)
+                    div(class='ab-4') Quantity: <b>#{product.stock}</b>
+
+                if(product.thumbnail)
+                    img(
+                        src=product.thumbnail
+                        alt=product.title
+                        class='img-fluid'
+                        width='500'
+                        height=auto
+                    )
+
+
+                if(product.position)
+                    div(class='ab-4') Position: <b>#{product.position}</b>
+
+                if(product.description)
+                    div(class='ab-4') Description: #{product.description}
+
+                a(
+                    class='btn btn-warning'
+                    href=`${prefixAdmin}/products/edit/${product._id}`
+                ) Edit

@@ -151,7 +151,7 @@ module.exports.createPost = async (req, res) => {
     let newProduct = new Product(req.body);
     await newProduct.save();
 
-    // console.log(req.file);
+
 
     res.redirect(`${systemConfig.prefixAdmin}/products`);
 }

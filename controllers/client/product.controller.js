@@ -17,10 +17,9 @@ module.exports.index = async (req, res) => {
 module.exports.detail = async (req, res) => {
     try {
         let product = await Product.findOne(
-            { 
-                slug: req.params.slug, 
+            {
+                slug: req.params.slug,
                 deleted: false,
-                // status: 'available'
             });
 
         res.render("client/pages/products/detail.pug", {

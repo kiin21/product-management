@@ -57,7 +57,7 @@ module.exports.changeStatus = async (req, res) => {
 
     req.flash('success', 'Change status successfully');
 
-    res.redirect('back');
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
 
 // [patch] admin/products/changes-multi-status
@@ -90,7 +90,8 @@ module.exports.changeMultiStatus = async (req, res) => {
             break;
     }
 
-    res.redirect('back');
+    // res.redirect('back');
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
 
 
@@ -106,7 +107,8 @@ module.exports.deleteItem = async (req, res) => {
             deletedAt: currentTime
         });
 
-    res.redirect('back');
+    // res.redirect('back');
+    res.redirect(`${systemConfig.prefixAdmin}/products`);    
 }
 
 // // [get] admin/products/configdb
@@ -196,8 +198,8 @@ module.exports.editPostPatch = async (req, res) => {
         req.flash('error', 'Edit product failed');
     }
 
-    res.redirect(`back`);
-
+    // res.redirect(`back`);
+    res.redirect(`${systemConfig.prefixAdmin}/products/edit/${req.params.id}`);
 }
 
 // [get] admin/products/detail/:id

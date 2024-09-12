@@ -4,6 +4,7 @@ include ../../mixins/search
 include ../../mixins/pagination
 include ../../mixins/changeStatus
 include ../../mixins/alertMessage
+include ../../mixins/sort
 
 block main 
 
@@ -23,6 +24,13 @@ block main
                     +search(keyword)
 
     .card.mb-3
+        .card-header Sort
+        .card-body
+            .row 
+                .col-4 
+                    +sort()
+
+    .card.mb-3
         .card-header List
         .card-body
             .row 
@@ -40,7 +48,7 @@ block main
             )
                 thead
                     tr
-                        th Position
+                        th No
                         th 
                             input(
                                 type='checkbox'
@@ -50,18 +58,13 @@ block main
                         th Title
                         th Price
                         th Status 
+                        th Position
                         th Action
 
                 tbody#sortable
                     each product, index in products
                         tr(data-id=product._id)
-                            td 
-                                input(
-                                    type='number'
-                                    style='width: 50px;'
-                                    name='position'
-                                    value=product.position
-                                )
+                            td <b>#{index + 1}</b>
                             td 
                                 input(
                                     type='checkbox'
@@ -90,6 +93,13 @@ block main
                                         product-id=product._id
                                         class='badge bg-danger'
                                     ) Unavailable
+                            td 
+                                input(
+                                    type='number'
+                                    style='width: 50px;'
+                                    name='position'
+                                    value=product.position
+                                )
                             td
                                 a(
                                     href=`${prefixAdmin}/products/detail/${product._id}`

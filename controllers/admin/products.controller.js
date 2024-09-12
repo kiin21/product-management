@@ -32,9 +32,18 @@ module.exports.products = async (req, res) => {
         currentPage: 1,
     });
 
+    // sort
+    let sort = {};
+    if (req.query.sortkey && req.query.sortvalue) {
+        sort[req.query.sortkey] = req.query.sortvalue;
+    } else {
+        sort.position = 'desc';
+    }
+    // end sort
+
     //Retrieve products
     let products = await Product.find(filter)
-        .sort({ position: 'asc' })
+        .sort(sort)
         .limit(paginationObj.limitItems)
         .skip((paginationObj.currentPage - 1) * paginationObj.limitItems);
 
@@ -108,7 +117,7 @@ module.exports.deleteItem = async (req, res) => {
         });
 
     // res.redirect('back');
-    res.redirect(`${systemConfig.prefixAdmin}/products`);    
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
 
 // // [get] admin/products/configdb
@@ -174,7 +183,7 @@ module.exports.editPost = async (req, res) => {
 // [patch] admin/products/edit/:id
 module.exports.editPostPatch = async (req, res) => {
 
-    console.log(req.body); 
+    console.log(req.body);
 
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);

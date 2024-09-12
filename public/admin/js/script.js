@@ -113,3 +113,43 @@ if (uploadImage) {
 
 }
 
+//sort
+const sort = document.querySelector("[sort]");
+if (sort) {
+    //sort
+    let sortSelect = document.querySelector("[sort-select]");
+
+    // Set the selected option based on URL parameters
+    let urlParams = new URLSearchParams(window.location.search);
+    let sortkey = urlParams.get("sortkey");
+    let sortvalue = urlParams.get("sortvalue");
+    if (sortkey && sortvalue) {
+        let query = `${sortkey}-${sortvalue}`;
+        let selectedOption = sortSelect.querySelector(`option[value="${query}"]`);
+        if (selectedOption) {
+            selectedOption.selected = true;
+        }
+    }
+
+    sortSelect.addEventListener("change", (e) => {
+
+        let [sortkey, sortvalue] = e.target.value.split("-");
+
+        let url = new URL(window.location.href);
+        url.searchParams.set("sortkey", sortkey);
+        url.searchParams.set("sortvalue", sortvalue);
+
+        window.location.href = url.href;
+    });
+
+    // clear sort
+    let clearBtn = document.querySelector("[sort-clear]");
+    clearBtn.addEventListener("click", () => {
+        let url = new URL(window.location.href);
+        url.searchParams.delete("sortkey");
+        url.searchParams.delete("sortvalue");
+
+        window.location.href = url.href;
+    });
+}
+//end sort

@@ -182,14 +182,14 @@
 /* Close preview image button */
 [image-preview-container] {
     position: relative;
-    width: 230px;
+    width: auto;
     height: 230px;
     background-color: transparent;
 }
 
 [image-preview-container] img {
-    width: 230px;
-    height: auto;
+    width: auto;
+    height: 230;
     object-fit: cover;
 }
 [btn-close-preview-img] {

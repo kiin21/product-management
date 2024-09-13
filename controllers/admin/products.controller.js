@@ -143,7 +143,7 @@ module.exports.createItem = async (req, res) => {
 }
 
 // [post] admin/products/create
-module.exports.createPost = async (req, res) => {
+module.exports.createPost = fasync (req, res) => {
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);

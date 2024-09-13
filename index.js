@@ -9,6 +9,7 @@ const session = require('express-session');
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
 const database = require('./config/database.js');
+const path = require('path');
 
 
 
@@ -37,6 +38,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser('my-unique-key'));
 
 app.use(session({ cookie: { maxAge: 60000 } }));
+
+//tiny mce for text editor
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+// end tiny mce for text editor
 
 //flash
 app.use(flash());

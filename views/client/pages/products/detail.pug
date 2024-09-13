@@ -5,16 +5,16 @@ block main
         .row 
             .col-12 
                 if(product.title)
-                    h1(class='ab-4') #{product.title}
+                    h1(class='mb-4') #{product.title}
 
                 if(product.price)
-                    div(class='ab-4') Price: <b>#{product.price}</b>
+                    div(class='mb-4') Price: <b>#{product.price}</b>
 
                 if(product.discountPercentage)
-                    div(class='ab-4') Discount: <b>#{product.discountPercentage}%</b>
+                    div(class='mb-4') Discount: <b>#{product.discountPercentage}%</b>
 
                 if(product.stock)
-                    div(class='ab-4') Quantity: <b>#{product.stock}</b>
+                    div(class='mb-4') Quantity: <b>#{product.stock}</b>
 
                 if(product.thumbnail)
                     img(
@@ -27,10 +27,10 @@ block main
 
 
                 if(product.position)
-                    div(class='ab-4') Position: <b>#{product.position}</b>
+                    div(class='mb-4') Position: <b>#{product.position}</b>
 
                 if(product.description)
-                    div(class='ab-4') Description: #{product.description}
+                    div(class='mb-4') Description: #{product.description}
 
                 a(
                     class='btn btn-warning'

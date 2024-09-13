@@ -32,8 +32,6 @@ module.exports.upload = (req, res, next) => {
                 let result = await streamUpload(req);
                 req.body.thumbnail = result.secure_url;
 
-                console.log(req.body.thumbnail);
-
                 next();
             } catch (error) {
                 console.log(error);

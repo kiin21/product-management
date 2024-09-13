@@ -4,10 +4,7 @@ const controller = require('../../controllers/admin/products.controller');
 const multer = require('multer')
 const uploadImage = require('../../middlewares/admin/uploadImageToClould.middlewares');
 
-// const storageMulter = require('../../helpers/storageMulter');
 const validatorCreateProduct = require('../../validates/admin/product.validate');
-
-
 
 const upload = multer({})
 

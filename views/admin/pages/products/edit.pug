@@ -4,7 +4,7 @@ include ../../mixins/alertMessage
 block main
     +alertMessage(5000) 
     
-    h1(class="ab-4") Edit product 
+    h1(class="mb-4") Edit product 
 
     Form(
         action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`

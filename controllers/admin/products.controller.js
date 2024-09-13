@@ -47,8 +47,6 @@ module.exports.products = async (req, res) => {
         .limit(paginationObj.limitItems)
         .skip((paginationObj.currentPage - 1) * paginationObj.limitItems);
 
-    console.log(products.length);
-
     res.render("admin/pages/products/index", {
         products: products,
         filterBar: filterStatus,
@@ -143,10 +141,13 @@ module.exports.createItem = async (req, res) => {
 }
 
 // [post] admin/products/create
-module.exports.createPost = fasync (req, res) => {
+module.exports.createPost = async (req, res) => {
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
+    req.body.description = String(req.body.description);
+
+    console.log("req.body", req.body);
 
     if (!req.body.position) {
         let amount = await Product.countDocuments();
@@ -157,6 +158,8 @@ module.exports.createPost = fasync (req, res) => {
 
     let newProduct = new Product(req.body);
     await newProduct.save();
+
+    console.log("newProduct", newProduct.description);
 
     res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
@@ -182,9 +185,6 @@ module.exports.editPost = async (req, res) => {
 }
 // [patch] admin/products/edit/:id
 module.exports.editPostPatch = async (req, res) => {
-
-    console.log(req.body);
-
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
@@ -207,8 +207,6 @@ module.exports.detail = async (req, res) => {
         let productId = req.params.id;
 
         let product = await Product.findOne({ _id: productId, deleted: false });
-
-        console.log(product);
 
         res.render(
             "admin/pages/products/detail",

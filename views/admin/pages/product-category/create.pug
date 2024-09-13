@@ -1,16 +1,14 @@
 extends ../../layouts/default.pug
-include ../../mixins/alertMessage
+include ../../mixins/alertMessage.pug
+block main 
+    h1(class='mb-4') Create new product category
 
-block main
-    +alertMessage(5000) 
+    +alertMessage(5000)
 
-    h1(class="mb-4") Add new product 
-
-    Form(
-        action=`${prefixAdmin}/products/create`
-        id='form-create-product'
+    form(
+        action=`${prefixAdmin}/product-category/create`
         method='POST'
-        enctype="multipart/form-data"
+        enctype='multipart/form-data'
     )
         div(class='form-group')
             label(for='title') Title
@@ -22,41 +20,22 @@ block main
                 required
             )
         div(class='form-group')
+            label(for='parent_id') Parent category 
+            input(
+                type='text'
+                class='form-control'
+                id='parent_id'
+                name='parent_id'
+                required
+            )
+        div(class='form-group')
             label(for='describe') Description
             textarea(
                 class='form-control'
                 id='describe'
                 name='description'
                 rows="5"
-            )
-        div(class='form-group')
-            label(for='price') Price
-            input(
-                type='number'
-                class='form-control'
-                id='price'
-                name='price'
-                required
-            )
-        div(class='form-group')
-            label(for='discount') Discount 
-            input(
-                type='number' 
-                class='form-control'
-                id='discount'
-                name='discountPercentage'
-                value=0
-            )
-        div(class='form-group')
-            label(for='quantity') Quantity
-            input(
-                type='number'
-                class='form-control'
-                id='stock'
-                name='stock'
-                value=0
-                min=0
-            )
+            )     
         div(
             class='form-group' 
             upload-image
@@ -84,7 +63,6 @@ block main
             )
                 span
 
-
         div(class='form-group') 
             label(for='position') Position 
             input(
@@ -99,24 +77,34 @@ block main
             input(
                 type='radio'
                 class='form-check-input'
-                id='statusActive'
+                id='statusAvailable'
                 name='status'
+                value='available'
                 checked
             )
-            label(for='statusActive' class='form-check-label') Available 
+            label(for='statusAvailable' class='form-check-label') Available 
         div(class='form-group form-check form-check-inline')
             input(
                 type='radio'
                 class='form-check-input'
-                id='statusActive'
+                id='statusUnavailable'
                 name='status'
+                value='unavailable'
             )
-            label(for='statusActive' class='form-check-label') Unavailable
+            label(for='statusUnavailable' class='form-check-label') Unavailable     
         div(class='form-group')
             button(
                 type='submit'
                 class='btn btn-primary'
-            ) + Create
-
-
-    script(src="/admin/js/products.js")
+            ) + Create         
+//- //- _id
+//- //- title 
+//- //- description 
+//- //- thumbnail 
+//- //- status 
+//- //- position 
+//- //- deleted 
+//- //- deletedAt 
+//- //- createdAt
+//- //- updatedAt
+//- //- slug

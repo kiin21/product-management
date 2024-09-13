@@ -15,8 +15,6 @@ if (statusBtn.length !== 0) {
 
             let action = path + `/${changedStatus}/${id}?_method=PATCH`;
 
-            console.log(action);
-
             changeStatusForm.setAttribute("action", action);
             changeStatusForm.submit();
         });

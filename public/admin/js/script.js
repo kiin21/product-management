@@ -75,7 +75,6 @@ if (btnPagination.length !== 0) {
 const alertMessage = document.querySelector("#alert-popup");
 if (alertMessage) {
     let timeout = alertMessage.getAttribute("timeout");
-    console.log(alertMessage);
     setTimeout(() => {
         alertMessage.classList.add("alert-hidden");
     }, timeout);

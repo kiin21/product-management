@@ -1,0 +1,86 @@
+extends ../../layouts/default.pug
+
+block main 
+    h1 item list 
+    
+    .card.mb-3
+        .card-header List
+        .card-body
+            .row 
+                .col-8
+                .col-4 
+                    a(
+                        href=`${prefixAdmin}/item-category/create`
+                        class='btn btn-outline-success'
+                    ) + Create new item
+                
+            table(
+                class='table table-hover table-sm' 
+                id='check-multi'
+            )
+                thead
+                    tr
+                        th No
+                        th 
+                            input(
+                                type='checkbox'
+                                id='check-all'
+                            )
+                        th Image
+                        th Title
+                        th Status 
+                        th Position
+                        th Action
+
+                tbody#sortable
+                    each item, index in records
+                        tr(data-id=item._id)
+                            td <b>#{index + 1}</b>
+                            td 
+                                input(
+                                    type='checkbox'
+                                    class='check-item'
+                                    id='check-item'
+                                    value=item._id
+                                )
+                            td 
+                                img(src=item.thumbnail alt=item.description width="100px" height="auto")
+                            td #{item.title}
+                            td
+                                if item.status === 'available'
+                                    a(
+                                        href='javascript:;'
+                                        btn-change-status
+                                        item-status=item.status
+                                        item-id=item._id 
+                                        class='badge bg-success'
+                                    ) Available
+                                else
+                                    a(
+                                        href='javascript:;'
+                                        btn-change-status
+                                        item-status=item.status
+                                        item-id=item._id
+                                        class='badge bg-danger'
+                                    ) Unavailable
+                            td 
+                                input(
+                                    type='number'
+                                    style='width: 50px;'
+                                    name='position'
+                                    value=item.position
+                                )
+                            td
+                                a(
+                                    href=`${prefixAdmin}/product-category/detail/${item._id}`
+                                    class='btn btn-secondary btn-sm me-1'
+                                ) Detail                            
+                                a(
+                                    href=`${prefixAdmin}/product-category/edit/${item._id}`
+                                    class='btn btn-warning btn-sm me-1'
+                                ) Edit
+                                button(
+                                    class='btn btn-danger btn-sm'
+                                    id='btn-delete'
+                                    item-id=item._id
+                                ) Delete

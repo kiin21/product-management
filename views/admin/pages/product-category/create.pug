@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/alertMessage.pug
+include ../../mixins/printCategory.pug
 block main 
     h1(class='mb-4') Create new product category
 
@@ -21,13 +22,15 @@ block main
             )
         div(class='form-group')
             label(for='parent_id') Parent category 
-            input(
-                type='text'
-                class='form-control'
-                id='parent_id'
+            select(
                 name='parent_id'
-                required
+                id='parent_id'
+                class='form-control'
             )
+                option(value='') Choose parent category
+                if(records)
+                    each item in records
+                        +printCategory(item, '', 0)
         div(class='form-group')
             label(for='describe') Description
             textarea(

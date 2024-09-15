@@ -1,7 +1,7 @@
 extends ../../layouts/default.pug
 
 block main 
-    h1 item list 
+    h1 Product category 
     
     .card.mb-3
         .card-header List
@@ -10,9 +10,9 @@ block main
                 .col-8
                 .col-4 
                     a(
-                        href=`${prefixAdmin}/item-category/create`
+                        href=`${prefixAdmin}/product-category/create`
                         class='btn btn-outline-success'
-                    ) + Create new item
+                    ) + Create new category
                 
             table(
                 class='table table-hover table-sm' 

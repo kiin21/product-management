@@ -1,5 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/alertMessage.pug
+include ../../mixins/selectTree.pug
+
 block main 
     h1(class='mb-4') Edit <b>#{category.title}</b>
 
@@ -29,6 +31,8 @@ block main
                 class='form-control'
             )
                 option(value='') Choose parent category
+                if(records)
+                    +select-tree(records, 0, category.parent_id)
         div(class='form-group')
             label(for='describe') Description
             textarea(

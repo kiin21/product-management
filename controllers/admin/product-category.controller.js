@@ -77,9 +77,6 @@ module.exports.edit = async (req, res) => {
         let filter = { deleted: false };
         let records = await ProductCategory.find(filter);
 
-        records.forEach(record => { createChild(records, record) });
-
-        records.forEach(record => console.log(record.level));
         //end find add category
 
         res.render(
@@ -87,7 +84,7 @@ module.exports.edit = async (req, res) => {
             {
                 pageTitle: "Edit category",
                 category: category,
-                records: records
+                records: createTree.tree(records)
             }
         );
     } catch (err) {

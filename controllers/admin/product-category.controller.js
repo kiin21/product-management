@@ -35,8 +35,6 @@ module.exports.createPost = async (req, res) => {
     req.body.parent_id = String(req.body.parent_id);
     req.body.description = String(req.body.description);
 
-    console.log("req.body", req.body);
-
     if (!req.body.position) {
         let amount = await ProductCategory.countDocuments();
         req.body.position = amount + 1;

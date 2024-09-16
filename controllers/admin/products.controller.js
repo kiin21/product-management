@@ -1,8 +1,10 @@
 const Product = require("../../models/product.model");
+const ProductCategory = require("../../models/product-category.model");
 const filterBarHelper = require("../../helpers/filter");
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require('../../config/system');
+const createTree = require("../../helpers/createTree");
 
 // [get] admin/products
 module.exports.products = async (req, res) => {
@@ -132,11 +134,17 @@ module.exports.deleteItem = async (req, res) => {
 
 // [get] admin/products/create
 module.exports.createItem = async (req, res) => {
+    let filter = { deleted: false };
+    let category = await ProductCategory.find(filter);
+
+    // console.log(createTree.tree(category));
+
     res.render(
         "admin/pages/products/create",
         {
             pageTitle: "Create Product",
-        }
+            category: createTree.tree(category)
+        },
     );
 }
 

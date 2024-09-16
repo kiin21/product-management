@@ -1,0 +1,35 @@
+extends ../../layouts/default.pug
+
+block main 
+    h1(class="mb-4") Add new role
+
+    form(
+        action=`${prefixAdmin}/roles/create`
+        method='POST'
+    )
+
+        div(class='form-group')
+            label(for='name') Title
+            input(
+                type='text'
+                class='form-control'
+                id='title'
+                name='title'
+                required
+            )
+        div(
+            class='form-group'
+        )
+            label(for='description') Description
+            textarea(
+                class='form-control'
+                id='description'
+                name='description'
+                rows="5"
+            )
+        div(class='form-group')
+            button(
+                type='submit'
+                class='btn btn-primary'
+            ) Save
+    

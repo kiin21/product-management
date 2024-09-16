@@ -147,8 +147,6 @@ module.exports.createPost = async (req, res) => {
     req.body.stock = parseInt(req.body.stock);
     req.body.description = String(req.body.description);
 
-    console.log("req.body", req.body);
-
     if (!req.body.position) {
         let amount = await Product.countDocuments();
         req.body.position = amount + 1;
@@ -158,8 +156,6 @@ module.exports.createPost = async (req, res) => {
 
     let newProduct = new Product(req.body);
     await newProduct.save();
-
-    console.log("newProduct", newProduct.description);
 
     res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
@@ -189,6 +185,8 @@ module.exports.editPostPatch = async (req, res) => {
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
     req.body.position = parseInt(req.body.position);
+
+    console.log("req.body product edit", req.body);
 
     try {
         await Product.updateOne({ _id: req.params.id }, req.body);

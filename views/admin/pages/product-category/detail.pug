@@ -1,0 +1,34 @@
+extends ../../layouts/default.pug
+
+block main
+    if(category.title)
+        h1(class='mb-4') #{category.title}
+
+    if(category.thumbnail)
+        img(
+            src=category.thumbnail
+            alt=category.title
+            class='img-fluid'
+            style='width: 230px; max-height: 200px;'
+        )
+    
+    if(category.status)
+        div(class='mb-4')
+            span Status:
+            if(category.status==='available')
+                span(class='badge bg-success') Available
+            else
+                span(class='badge bg-danger') Unavailable
+
+    if(category.position)
+        div(class='mb-4') Position: #{category.position}
+
+    if(category.description)
+        div(class='mb-4') Description: !{category.description}
+
+    a(
+        class='btn btn-warning'
+        href=`${prefixAdmin}/product-category/edit/${category._id}`
+    ) Edit
+
+    script(src="/admin/js/product-category.js")

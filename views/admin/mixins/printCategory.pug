@@ -1,5 +1,0 @@
-mixin printCategory(item, dash, level)
-    if(level == item.level)
-        option(value=item._id)= dash + item.title        
-        each child in item.child
-            +printCategory(child, dash + '--', level+1)

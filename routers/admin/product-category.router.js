@@ -19,4 +19,21 @@ router.post(
     controller.createPost
 );
 
+router.delete('/delete/:id', controller.deleteCategory);
+
+router.get('/edit/:id', controller.edit);
+
+router.patch(
+    '/edit/:id',
+    upload.single('thumbnail'),
+    uploadImage.upload,
+    validatorCreateProduct.createPost,
+    controller.editPostPatch
+);
+
+router.patch('/change-status/:status/:ID', controller.changeStatus);
+
+// [get] admin/product-category/detail/:id
+router.get('/detail/:id', controller.detail);
+
 module.exports = router;

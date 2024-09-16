@@ -1,4 +1,5 @@
 extends ../../layouts/default.pug
+include ../../mixins/categoryTree.pug
 
 block main 
     h1 Product category 
@@ -33,54 +34,18 @@ block main
                         th Action
 
                 tbody#sortable
-                    each item, index in records
-                        tr(data-id=item._id)
-                            td <b>#{index + 1}</b>
-                            td 
-                                input(
-                                    type='checkbox'
-                                    class='check-item'
-                                    id='check-item'
-                                    value=item._id
-                                )
-                            td 
-                                img(src=item.thumbnail alt=item.description width="100px" height="auto")
-                            td #{item.title}
-                            td
-                                if item.status === 'available'
-                                    a(
-                                        href='javascript:;'
-                                        btn-change-status
-                                        item-status=item.status
-                                        item-id=item._id 
-                                        class='badge bg-success'
-                                    ) Available
-                                else
-                                    a(
-                                        href='javascript:;'
-                                        btn-change-status
-                                        item-status=item.status
-                                        item-id=item._id
-                                        class='badge bg-danger'
-                                    ) Unavailable
-                            td 
-                                input(
-                                    type='number'
-                                    style='width: 50px;'
-                                    name='position'
-                                    value=item.position
-                                )
-                            td
-                                a(
-                                    href=`${prefixAdmin}/product-category/detail/${item._id}`
-                                    class='btn btn-secondary btn-sm me-1'
-                                ) Detail                            
-                                a(
-                                    href=`${prefixAdmin}/product-category/edit/${item._id}`
-                                    class='btn btn-warning btn-sm me-1'
-                                ) Edit
-                                button(
-                                    class='btn btn-danger btn-sm'
-                                    id='btn-delete'
-                                    item-id=item._id
-                                ) Delete
+                    +category-tree(records)
+
+    // form change status
+    form( 
+        method='POST'
+        id='change-status-form'
+        data-path=`${prefixAdmin}/product-category/change-status`
+    )   
+    // form delete status
+    form(
+        method='POST'
+        id='delete-form'
+        data-path=`${prefixAdmin}/product-category/delete`
+    )
+    script(src='/admin/js/product-category.js')

@@ -1,0 +1,8 @@
+mixin select-tree(records, level=0)
+    each item in records
+        - const prefix = '-- '.repeat(level)
+        option(
+            value=item._id
+        ) #{prefix} #{item.title}
+        if item.children
+            +select-tree(item.children, level + 1)

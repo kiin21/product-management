@@ -64,7 +64,7 @@ block main
                 tbody#sortable
                     each product, index in products
                         tr(data-id=product._id)
-                            td <b>#{index + 1}</b>
+                            td <b>#{paginationObj.limitItems*(paginationObj.currentPage-1)+index+1}</b>
                             td 
                                 input(
                                     type='checkbox'
@@ -116,7 +116,8 @@ block main
                                 ) Delete
 
     +pagination(paginationObj) 
-    // form change multi status
+
+    // form change status
     form( 
         method='POST'
         id='change-status-form'

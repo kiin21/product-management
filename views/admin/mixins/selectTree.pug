@@ -6,4 +6,4 @@ mixin select-tree(records, level=0, selectedId='')
             selected=item._id == selectedId
         ) #{prefix} #{item.title}
         if item.children
-            +select-tree(item.children, level + 1)
+            +select-tree(item.children, level + 1, selectedId)

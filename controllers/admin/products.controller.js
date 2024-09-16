@@ -172,14 +172,19 @@ module.exports.createPost = async (req, res) => {
 module.exports.editPost = async (req, res) => {
     try {
         let productId = req.params.id;
-
         let product = await Product.findOne({ _id: productId, deleted: false });
+
+        let filter = { deleted: false };
+        let category = await ProductCategory.find(filter);
+
+        console.log("product edit", product.product_category_id);
 
         res.render(
             "admin/pages/products/edit",
             {
                 pageTitle: "Edit Product",
-                product: product
+                product: product,
+                category: createTree.tree(category)
             }
         );
     } catch (err) {

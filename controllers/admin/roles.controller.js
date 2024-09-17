@@ -68,3 +68,27 @@ module.exports.delete = async (req, res) => {
 
     res.redirect(`${systemConfig.prefixAdmin}/roles`);
 }
+
+// [get] /admin/roles/permissions
+module.exports.permissions = async (req, res) => {
+    let filter = { deleted: false };
+
+    let records = await Role.find(filter);
+
+    res.render('admin/pages/roles/permissions', {
+        pageTitle: 'Roles permissions',
+        records: records
+    });
+}
+
+// [patch] /admin/roles/permissions
+module.exports.permissionsPatch = async (req, res) => {
+    let records = JSON.parse(req.body.permissions);
+
+    records.forEach(async record => {
+        await Role.updateOne({ _id: record.id }, { permission: record.permissions });
+    });
+
+    req.flash('success', 'Update permissions successfully');
+    res.redirect(`${systemConfig.prefixAdmin}/roles/permissions`);
+}

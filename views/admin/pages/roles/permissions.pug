@@ -2,194 +2,256 @@ extends ../../layouts/default.pug
 include ../../mixins/alertMessage.pug
 
 block main
+    - var hasViewPermission = role.permission.some(p => p['roles_permission'] === true)
+
     +alertMessage(5000)
 
-    h1(class="mb-4") #{pageTitle}
+    if(hasViewPermission)
+        h1(class="mb-4") #{pageTitle}
 
-    if(records)
-        div(class="text-right")
-            button(
-                type="submit"
-                class="btn btn-primary mb-3"
-                button-submit
-            ) Update
+        if(records)
+            div(class="text-right")
+                button(
+                    type="submit"
+                    class="btn btn-primary mb-3"
+                    button-submit
+                ) Update
 
-        table(
-            class="table table-hover table-sm"
-            table-permissions
-        )
-            thead
-                tr
-                    th Permission
-                    each item in records
-                        th(class="text-center") #{item.title}
-            tbody
-                tr(data-name="id" class="d-none")
-                    td 
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type="text" 
-                                input-id
-                                value=item._id
-                            )
-                //- Product category
-                tr
-                    td(colspan="4")
-                        b Product category
-
-                - var viewPermissionName = "products-category_view"
-                tr(data-name=viewPermissionName)
-                    td View
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[viewPermissionName] === true)
-                            )
-
-                - var createPermissionName = "products-category_create"
-                tr(data-name=createPermissionName)
-                    td Add new
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[createPermissionName] === true)
-                            )
-
-                - var editPermissionName = "products-category_edit"
-                tr(data-name=editPermissionName)
-                    td Edit
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[editPermissionName] === true)
-                            )
-
-                - var deletePermissionName = "products-category_delete"
-                tr(data-name=deletePermissionName)
-                    td Delete
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[deletePermissionName] === true)
-                            )
-                //- Product
-                tr
-                    td(colspan="4")
-                        b Product
-
-                - var viewPermissionName = "products_view"
-                tr(data-name=viewPermissionName)
-                    td View
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[viewPermissionName] === true)
-                            )
-
-                - var createPermissionName = "products_create"
-                tr(data-name=createPermissionName)
-                    td Add new
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[createPermissionName] === true)
-                            )
-
-                - var editPermissionName = "products_edit"
-                tr(data-name=editPermissionName)
-                    td Edit
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[editPermissionName] === true)
-                            )
-
-                - var deletePermissionName = "products_delete"
-                tr(data-name=deletePermissionName)
-                    td Delete
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[deletePermissionName] === true)
-                            )
-                
-                //- Permissions
-                tr
-                    td(colspan="4")
-                        b Product category
-
-                - var viewPermissionName = "roles_view"
-                tr(data-name=viewPermissionName)
-                    td View
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[viewPermissionName] === true)
-                            )
-
-                - var createPermissionName = "roles_create"
-                tr(data-name=createPermissionName)
-                    td Add new
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[createPermissionName] === true)
-                            )
-
-                - var editPermissionName = "roles_edit"
-                tr(data-name=editPermissionName)
-                    td Edit
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[editPermissionName] === true)
-                            )
-
-                - var deletePermissionName = "roles_delete"
-                tr(data-name=deletePermissionName)
-                    td Delete
-                    each item in records 
-                        td(class="text-center")
-                            input(
-                                type='checkbox' 
-                                roleId=item._id
-                                checked=item.permission.some(permission => permission[deletePermissionName] === true)
-                            )
-
-
-    form(
-        id="form-change-permissions"
-        method="POST"
-        action=`${prefixAdmin}/roles/permissions?_method=PATCH`
-    )
-        div(class="form-group d-none")
-            input(
-                type="text"
-                class="form-control"
-                name="permissions"
+            table(
+                class="table table-hover table-sm"
+                table-permissions
             )
+                thead
+                    tr
+                        th Permission
+                        each item in records
+                            th(class="text-center") #{item.title}
+                tbody
+                    tr(data-name="id" class="d-none")
+                        td 
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type="text" 
+                                    input-id
+                                    value=item._id
+                                )
+                    //- Product category
+                    tr
+                        td(colspan="4")
+                            b Product category
 
-    script(src="/admin/js/permissions.js")               
+                    - var viewPermissionName = "products-category_view"
+                    tr(data-name=viewPermissionName)
+                        td View
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[viewPermissionName] === true)
+                                )
+
+                    - var createPermissionName = "products-category_create"
+                    tr(data-name=createPermissionName)
+                        td Add new
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[createPermissionName] === true)
+                                )
+
+                    - var editPermissionName = "products-category_edit"
+                    tr(data-name=editPermissionName)
+                        td Edit
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[editPermissionName] === true)
+                                )
+
+                    - var deletePermissionName = "products-category_delete"
+                    tr(data-name=deletePermissionName)
+                        td Delete
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[deletePermissionName] === true)
+                                )
+                    //- Product
+                    tr
+                        td(colspan="4")
+                            b Product
+
+                    - var viewPermissionName = "products_view"
+                    tr(data-name=viewPermissionName)
+                        td View
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[viewPermissionName] === true)
+                                )
+
+                    - var createPermissionName = "products_create"
+                    tr(data-name=createPermissionName)
+                        td Add new
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[createPermissionName] === true)
+                                )
+
+                    - var editPermissionName = "products_edit"
+                    tr(data-name=editPermissionName)
+                        td Edit
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[editPermissionName] === true)
+                                )
+
+                    - var deletePermissionName = "products_delete"
+                    tr(data-name=deletePermissionName)
+                        td Delete
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[deletePermissionName] === true)
+                                )
+                    
+                    //- Roles
+                    tr
+                        td(colspan="4")
+                            b Roles
+
+                    - var viewPermissionName = "roles_view"
+                    tr(data-name=viewPermissionName)
+                        td View
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[viewPermissionName] === true)
+                                )
+
+                    - var createPermissionName = "roles_create"
+                    tr(data-name=createPermissionName)
+                        td Add new
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[createPermissionName] === true)
+                                )
+
+                    - var editPermissionName = "roles_edit"
+                    tr(data-name=editPermissionName)
+                        td Edit
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[editPermissionName] === true)
+                                )
+
+                    - var deletePermissionName = "roles_delete"
+                    tr(data-name=deletePermissionName)
+                        td Delete
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[deletePermissionName] === true)
+                                )
+
+                    - var PermissionName = "roles_permission"
+                    tr(data-name=PermissionName)
+                        td Permission
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[PermissionName] === true)
+                                )
+
+                    //- Account
+                    tr
+                        td(colspan="4")
+                            b Account
+
+                    - var viewPermissionName = "account_view"
+                    tr(data-name=viewPermissionName)
+                        td View
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[viewPermissionName] === true)
+                                )
+
+                    - var createPermissionName = "account_create"
+                    tr(data-name=createPermissionName)
+                        td Add new
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[createPermissionName] === true)
+                                )
+
+                    - var editPermissionName = "account_edit"
+                    tr(data-name=editPermissionName)
+                        td Edit
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[editPermissionName] === true)
+                                )
+
+                    - var deletePermissionName = "account_delete"
+                    tr(data-name=deletePermissionName)
+                        td Delete
+                        each item in records 
+                            td(class="text-center")
+                                input(
+                                    type='checkbox' 
+                                    roleId=item._id
+                                    checked=item.permission.some(permission => permission[deletePermissionName] === true)
+                                )
+
+        form(
+            id="form-change-permissions"
+            method="POST"
+            action=`${prefixAdmin}/roles/permissions?_method=PATCH`
+        )
+            div(class="form-group d-none")
+                input(
+                    type="text"
+                    class="form-control"
+                    name="permissions"
+                )
+
+        script(src="/admin/js/permissions.js")               

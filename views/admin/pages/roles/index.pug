@@ -1,55 +1,65 @@
 extends ../../layouts/default.pug
 
 block main 
+
+    - var hasViewPermission = role.permission.some(p => p['roles_view'] === true)
+    - var hasCreatePermission = role.permission.some(p => p['roles_create'] === true)
+    - var hasEditPermission = role.permission.some(p => p['roles_edit'] === true)
+    - var hasDeletePermission = role.permission.some(p => p['roles_delete'] === true)
+
     h1(class="mb-4") Roles
     .card.mb-3 
         .card-header List of roles
-        .card-body 
-            .row 
-                .col-8 
-                .col-4 
-                    a(
-                        href=`${prefixAdmin}/roles/create`
-                        class='btn btn-outline-success'
-                    ) + Add new role
+        if(hasViewPermission)
+            .card-body 
+                .row 
+                    .col-8 
+                    .col-4 
+                        if(hasCreatePermission)
+                            a(
+                                href=`${prefixAdmin}/roles/create`
+                                class='btn btn-outline-success'
+                            ) + Add new role
 
-                table(class='table table-bordered table-striped mt-3')
-                    thead 
-                        tr 
-                            th No 
-                            th Title 
-                            th Description
-                            th Permission 
-                    tbody 
-                        if(roles.length)
-                            each role, index in roles
-                                tr 
-                                    td= index + 1
-                                    td= role.title
-                                    td !{role.description}
-                                    td 
-                                        a(
-                                            class='btn btn-secondary btn-sm me-1'
-                                            href=`${prefixAdmin}/roles/detail/${role._id}`
-                                        ) Detail 
-                                        a(
-                                            class='btn btn-warning btn-sm me-1'
-                                            href=`${prefixAdmin}/roles/edit/${role._id}`
-                                        ) Edit
-                                        button(
-                                            class='btn btn-danger btn-sm me-1'
-                                            id='btn-delete-role'
-                                            role-id=role._id
-                                        ) Delete
-
-                        else
+                    table(class='table table-bordered table-striped mt-3')
+                        thead 
                             tr 
-                                td(colspan='4' class='text-center') There is no role yet
+                                th No 
+                                th Title 
+                                th Description
+                                th Permission 
+                        tbody 
+                            if(roles.length)
+                                each role, index in roles
+                                    tr 
+                                        td= index + 1
+                                        td= role.title
+                                        td !{role.description}
+                                        td 
+                                            a(
+                                                class='btn btn-secondary btn-sm me-1'
+                                                href=`${prefixAdmin}/roles/detail/${role._id}`
+                                            ) Detail 
+                                            if(hasEditPermission)
+                                                a(
+                                                    class='btn btn-warning btn-sm me-1'
+                                                    href=`${prefixAdmin}/roles/edit/${role._id}`
+                                                ) Edit
+                                            if(hasDeletePermission)
+                                                button(
+                                                    class='btn btn-danger btn-sm me-1'
+                                                    id='btn-delete-role'
+                                                    role-id=role._id
+                                                ) Delete
 
-    // form delete 
-    form(
-        method='POST'
-        id='delete-form'
-        data-path=`${prefixAdmin}/roles/delete`
-    )
+                            else
+                                tr 
+                                    td(colspan='4' class='text-center') There is no role yet
+    if(hasDeletePermission)
+        // form delete 
+        form(
+            method='POST'
+            id='delete-form'
+            data-path=`${prefixAdmin}/roles/delete`
+        )
     script(src='/admin/js/role.js')

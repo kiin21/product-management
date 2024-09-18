@@ -1,4 +1,9 @@
 mixin category-tree(records, level=0)
+
+    - var hasEditPermission = role.permission.some(p => p['products-category_edit'] === true)
+    - var hasDeletePermission = role.permission.some(p => p['products-category_delete'] === true)
+
+
     each item, index in records
         - const prefix = '-- '.repeat(level)
         tr(data-id=item._id)
@@ -14,22 +19,38 @@ mixin category-tree(records, level=0)
                 img(src=item.thumbnail alt=item.description width="100px" height="auto")
             td #{prefix}#{item.title}
             td
-                if item.status === 'available'
-                    a(
-                        href='javascript:;'
-                        btn-change-status
-                        category-status=item.status
-                        item-id=item._id 
-                        class='badge bg-success'
-                    ) Available
-                else
-                    a(
-                        href='javascript:;'
-                        btn-change-status
-                        category-status=item.status
-                        item-id=item._id
-                        class='badge bg-danger'
-                    ) Unavailable
+                if(hasEditPermission)
+                    if item.status === 'available'
+                        a(
+                            href='javascript:;'
+                            btn-change-status
+                            category-status=item.status
+                            item-id=item._id 
+                            class='badge bg-success'
+                        ) Available
+                    else
+                        a(
+                            href='javascript:;'
+                            btn-change-status
+                            category-status=item.status
+                            item-id=item._id
+                            class='badge bg-danger'
+                        ) Unavailable
+                else 
+                    if item.status === 'available'
+                        span(
+                            btn-change-status
+                            category-status=item.status
+                            item-id=item._id 
+                            class='badge bg-success'
+                        ) Available
+                    else
+                        span(
+                            btn-change-status
+                            category-status=item.status
+                            item-id=item._id
+                            class='badge bg-danger'
+                        ) Unavailable
             td 
                 input(
                     type='number'
@@ -41,16 +62,18 @@ mixin category-tree(records, level=0)
                 a(
                     href=`${prefixAdmin}/product-category/detail/${item._id}`
                     class='btn btn-secondary btn-sm me-1'
-                ) Detail                            
-                a(
-                    href=`${prefixAdmin}/product-category/edit/${item._id}`
-                    class='btn btn-warning btn-sm me-1'
-                ) Edit
-                button(
-                    class='btn btn-danger btn-sm'
-                    id='btn-delete'
-                    product-id=item._id
-                ) Delete
+                ) Detail     
+                if(hasEditPermission)                       
+                    a(
+                        href=`${prefixAdmin}/product-category/edit/${item._id}`
+                        class='btn btn-warning btn-sm me-1'
+                    ) Edit
+                if(hasDeletePermission)
+                    button(
+                        class='btn btn-danger btn-sm'
+                        id='btn-delete'
+                        product-id=item._id
+                    ) Delete
 
         if item.children
             +category-tree(item.children, level + 1)

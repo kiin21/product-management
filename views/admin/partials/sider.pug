@@ -3,13 +3,24 @@
         ul 
             li 
                 a(href=`${prefixAdmin}/dashboard`) Dashboard 
-            li 
-                a(href=`${prefixAdmin}/products`) Product list
-            li 
-                a(href=`${prefixAdmin}/product-category`) Product category
-            li 
-                a(href=`${prefixAdmin}/roles`) Roles
-            li 
-                a(href=`${prefixAdmin}/roles/permissions`) Permission
-            li 
-                a(href=`${prefixAdmin}/accounts`) Accounts
+            
+            - var hasProductsViewPermission = role.permission.some(p => p['products_view'] === true)
+            if hasProductsViewPermission
+                li 
+                    a(href=`${prefixAdmin}/products`) Product list
+            - var hasProductCategoryViewPermission = role.permission.some(p => p['products-category_view'] === true)
+            if hasProductCategoryViewPermission            
+                li 
+                    a(href=`${prefixAdmin}/product-category`) Product category
+            - var hasRoleViewPermission = role.permission.some(p => p['roles_view'] === true)
+            if hasRoleViewPermission         
+                li 
+                    a(href=`${prefixAdmin}/roles`) Roles
+            - var hasViewPermission = role.permission.some(p => p['roles_permission'] === true)
+            if hasViewPermission                
+                li 
+                    a(href=`${prefixAdmin}/roles/permissions`) Permission
+            - var hasAccountViewPermission = role.permission.some(p => p['account_view'] === true)
+            if hasAccountViewPermission    
+                li 
+                    a(href=`${prefixAdmin}/accounts`) Accounts

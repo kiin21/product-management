@@ -2,70 +2,79 @@ extends ../../layouts/default.pug
 include ../../mixins/alertMessage.pug
 
 block main 
-    +alertMessage(5000)
-    h1(class="mb-4") Accounts
-    .card.mb-3 
-        .card-header List of accounts
-        .card-body 
-            .row 
-                .col-8 
-                .col-4 
-                    a(
-                        href=`${prefixAdmin}/accounts/create`
-                        class='btn btn-outline-success'
-                    ) + Add new account
+    - var hasViewPermission = role.permission.some(p => p['account_view'] === true)
+    - var hasCreatePermission = role.permission.some(p => p['account_create'] === true)
+    - var hasEditPermission = role.permission.some(p => p['account_edit'] === true)
+    - var hasDeletePermission = role.permission.some(p => p['account_delete'] === true)
 
-            table(
-                class='table table-hover table-sm'
-            )
-                thead
-                    tr
-                        th No
-                        th Avatar
-                        th Fullname
-                        th Role
-                        th Email 
-                        th Status
-                        th Action
+    if(hasViewPermission)
+        +alertMessage(5000)
+        h1(class="mb-4") Accounts
+        .card.mb-3 
+            .card-header List of accounts
+            .card-body 
+                .row 
+                    .col-8 
+                    .col-4 
+                        if(hasCreatePermission)
+                            a(
+                                href=`${prefixAdmin}/accounts/create`
+                                class='btn btn-outline-success'
+                            ) + Add new account
 
-                tbody
-                    each acc, index in accounts
-                        tr 
-                            td #{index + 1}
-                            td 
-                                img(
-                                    src=acc.avatar
-                                    alt=acc.fullname 
-                                    width="100px"
-                                    height="auto"
-                                )
-                            td #{acc.fullname}
-                            td #{acc.role.title}
-                            td #{acc.email}
-                            td 
-                                if (acc.status === 'available')
+                table(
+                    class='table table-hover table-sm'
+                )
+                    thead
+                        tr
+                            th No
+                            th Avatar
+                            th Fullname
+                            th Role
+                            th Email 
+                            th Status
+                            th Action
+
+                    tbody
+                        each acc, index in accounts
+                            tr 
+                                td #{index + 1}
+                                td 
+                                    img(
+                                        src=acc.avatar
+                                        alt=acc.fullname 
+                                        width="100px"
+                                        height="auto"
+                                    )
+                                td #{acc.fullname}
+                                td #{acc.role.title}
+                                td #{acc.email}
+                                td 
+                                    if (acc.status === 'available')
+                                        a(
+                                            href=hasEditPermission?'javascript:;' : ''
+                                            class='badge bg-success'
+                                            data-status=acc.status
+                                        ) Available
+                                    else if(acc.status === 'unavailable')
+                                        a(
+                                            href=hasEditPermission?'javascript:;' : ''
+                                            class='badge bg-danger'
+                                            data-status=acc.status
+                                        ) Unavailable
+                                td
                                     a(
-                                        href='javascript:;'
-                                        class='badge bg-success'
-                                        data-status=acc.status
-                                    ) Available
-                                else if(acc.status === 'unavailable')
-                                    a(
-                                        href='javascript:;'
-                                        class='badge bg-danger'
-                                        data-status=acc.status
-                                    ) Unavailable
-                            td
-                                a(
-                                    href=`${prefixAdmin}/accounts/detail/${acc._id}`
-                                    class='btn btn-secondary btn-sm me-1'
-                                ) Detail                            
-                                a(
-                                    href=`${prefixAdmin}/accounts/edit/${acc._id}`
-                                    class='btn btn-warning btn-sm me-1'
-                                ) Edit
-                                button(
-                                    class='btn btn-danger btn-sm'
-                                    id='btn-delete'
-                                    acc-id=acc._id
-                                ) Delete
+                                        href=`${prefixAdmin}/accounts/detail/${acc._id}`
+                                        class='btn btn-secondary btn-sm me-1'
+                                    ) Detail   
+                                    if(hasEditPermission)                         
+                                        a(
+                                            href=`${prefixAdmin}/accounts/edit/${acc._id}`
+                                            class='btn btn-warning btn-sm me-1'
+                                        ) Edit
+                                    if(hasDeletePermission)
+                                        button(
+                                            class='btn btn-danger btn-sm'
+                                            id='btn-delete'
+                                            acc-id=acc._id
+                                        ) Delete

@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const gen = require("../helpers/generate.js");
 
-mongoose.plugin(slug);
-
 const accountSchema = new mongoose.Schema(
     {
         fullname: String, 

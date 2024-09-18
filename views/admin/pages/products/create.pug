@@ -111,19 +111,21 @@ block main
             input(
                 type='radio'
                 class='form-check-input'
-                id='statusActive'
+                id='statusAvailable'
                 name='status'
+                value='available'
                 checked
             )
-            label(for='statusActive' class='form-check-label') Available 
+            label(for='statusAvailable' class='form-check-label') Available 
         div(class='form-group form-check form-check-inline')
             input(
                 type='radio'
                 class='form-check-input'
-                id='statusActive'
+                id='statusUnavailable'
                 name='status'
+                value='unavailable'
             )
-            label(for='statusActive' class='form-check-label') Unavailable
+            label(for='statusUnavailable' class='form-check-label') Unavailable    
         div(class='form-group')
             button(
                 type='submit'

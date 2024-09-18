@@ -5,7 +5,7 @@ const streamifier = require('streamifier');
 cloudinary.config({
     cloud_name: 'dtaoxer0u',
     api_key: '927454746273598',
-    api_secret: '9R9wK9A5ScSVrN6LdI0DOasT2-E' 
+    api_secret: '9R9wK9A5ScSVrN6LdI0DOasT2-E'
 });
 // End configuration cloudinary
 
@@ -30,8 +30,8 @@ module.exports.upload = (req, res, next) => {
         async function upload(req) {
             try {
                 let result = await streamUpload(req);
-                req.body.thumbnail = result.secure_url;
-
+                const tagName = req.file.fieldname;
+                req.body[tagName] = result.secure_url;
                 next();
             } catch (error) {
                 console.log(error);

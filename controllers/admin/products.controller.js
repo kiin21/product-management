@@ -1,3 +1,5 @@
+const Account = require('../../models/account.model');
+
 const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
 const filterBarHelper = require("../../helpers/filter");
@@ -48,6 +50,11 @@ module.exports.products = async (req, res) => {
         .sort(sort)
         .limit(paginationObj.limitItems)
         .skip((paginationObj.currentPage - 1) * paginationObj.limitItems);
+
+    for (const product of products) {
+        let account = await Account.findOne({ _id: product.createdBy.account_id });
+        product.createdBy.account = account;
+    }
 
     res.render("admin/pages/products/index", {
         products: products,
@@ -137,7 +144,7 @@ module.exports.createItem = async (req, res) => {
     let filter = { deleted: false };
     let category = await ProductCategory.find(filter);
 
-    // console.log(createTree.tree(category));
+    let accounts = await Account.find({ deleted: false });
 
     res.render(
         "admin/pages/products/create",
@@ -160,6 +167,10 @@ module.exports.createPost = async (req, res) => {
         req.body.position = amount + 1;
     } else {
         req.body.position = parseInt(req.body.position);
+    }
+
+    req.body.createdBy = {
+        account_id: String(res.locals.user._id)
     }
 
     let newProduct = new Product(req.body);

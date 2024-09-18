@@ -10,7 +10,7 @@ const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
 const database = require('./config/database.js');
 const path = require('path');
-
+const moment = require('moment');
 
 
 const app = express();
@@ -24,6 +24,8 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 //App local variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
+
 
 app.set('views', `${__dirname}/views`);
 

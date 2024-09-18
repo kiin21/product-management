@@ -4,6 +4,7 @@ const productsRouter = require('./products.router');
 const productCategoryRouter = require('./product-category.router');
 const rolesRouter = require('./roles.router');
 const accountsRouter = require('./accounts.router');
+const authRouter = require('./auth.router');
 
 module.exports = (app) => {
     const prefixAdmin = systemConfig.prefixAdmin;
@@ -12,6 +13,7 @@ module.exports = (app) => {
     app.use(prefixAdmin + '/product-category', productCategoryRouter);
     app.use(prefixAdmin+ '/roles', rolesRouter);
     app.use(prefixAdmin+ '/accounts', accountsRouter);
+    app.use(prefixAdmin+ '/auth', authRouter);
 };
 
 

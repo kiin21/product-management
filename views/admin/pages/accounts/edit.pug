@@ -1,0 +1,113 @@
+extends ../../layouts/default.pug
+include ../../mixins/alertMessage.pug
+
+block main 
+    +alertMessage(5000)
+    
+    h1(class="mb-4") Edit #{account.fullname}
+
+    form(
+        action=`${prefixAdmin}/accounts/edit/${account._id}?_method=PATCH`
+        method='POST'
+        enctype="multipart/form-data"
+    )
+
+        div(class='form-group mt-3')
+            label(for='fullname') <b>Fullname *</b>
+            input(
+                type='text'
+                class='form-control'
+                id='fullname'
+                name='fullname'
+                value=account.fullname
+                required
+            )
+        div(class='form-group mt-3')
+            label(for='email') <b>Email *</b>
+            input(
+                type='text'
+                class='form-control'
+                id='email'
+                name='email'
+                value=account.email
+                required
+            )
+            label(for='password') <b>Password *</b>
+            input(
+                type='password'
+                class='form-control'
+                id='password'
+                name='password'
+            )
+        div(class='form-group mt-3')
+            label(for='phone') <b>Phone number</b>
+            input(
+                type='number'
+                class='form-control'
+                id='phone'
+                name='phone'
+                value=account.phone
+            )
+        div(
+            class='form-group mt-3' 
+            upload-image
+        )
+            label(for='avatar') <b>Avatar</b>
+            input(
+                type='file'
+                class='form-control'
+                id='avatar'
+                name='avatar'
+                accept='image/*'
+                upload-image-input
+            )
+        div(image-preview-container) 
+            img(
+                upload-image-preview,
+                src=account.avatar,
+                alt='Image preview',
+            ) 
+            button(
+                type='button',
+                class='d-none',
+                btn-close-preview-img
+                aria-label='Close'
+            )
+                span
+        div(class='form-group mt-3')
+            label(for='role') <b>Role</b>
+            select(
+                class='form-control'
+                id='role_id'
+                name='role_id'
+            )
+                option(value='') -- Choose role --
+                each role in roles
+                    option(value=role._id selected=account.role_id==role._id)= role.title
+
+        div(class='form-group form-check form-check-inline')
+            input(
+                type='radio'
+                class='form-check-input'
+                id='statusAvailable'
+                name='status'
+                value='available'
+                checked=account.status=='available'
+            )
+            label(for='statusAvailable' class='form-check-label') Available 
+        div(class='form-group form-check form-check-inline')
+            input(
+                type='radio'
+                class='form-check-input'
+                id='statusUnavailable'
+                name='status'
+                value='unavailable'
+                checked=account.status=='unavailable'
+            )
+            label(for='statusUnavailable' class='form-check-label') Unavailable    
+        div(class='form-group mt-3')
+            button(
+                type='submit'
+                class='btn btn-primary'
+            ) + Update
+    

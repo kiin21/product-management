@@ -20,4 +20,12 @@ router.post(
     controller.createPost
 );
 
+
+router.get('/edit/:id', controller.edit);
+router.patch('/edit/:id', 
+    upload.single('avatar'),
+    uploadImage.upload,
+    validatorCreateAccount.editPatch,
+    controller.editPatch);
+
 module.exports = router;

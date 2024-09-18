@@ -52,3 +52,46 @@ module.exports.createPost = async (req, res) => {
         res.redirect(`${systemConfig.prefixAdmin}/accounts`);
     }
 }
+
+// [get] /admin/edit/:id
+module.exports.edit = async (req, res) => {
+    let filter = {
+        _id: req.params.id,
+        deleted: false
+    };
+
+    let roles = await Role.find({ deleted: false });
+
+    let account = await Account.findOne(filter);
+
+    res.render('admin/pages/accounts/edit', {
+        pageTitle: 'Edit account',
+        account: account,
+        roles: roles
+    });
+
+}
+
+// [patch] /admin/edit/:id
+module.exports.editPatch = async (req, res) => {
+    if (req.body.password) {
+        req.body.password = md5(req.body.password);
+    }
+    else {
+        delete req.body.password;
+    }
+
+    let id = req.params.id;
+
+    let checkEmail = await Account.findOne({ email: req.body.email, _id: { $ne: id }, deleted: false });
+    if (checkEmail) {
+        req.flash('error', `Email ${req.body.email} is already existed`);
+        res.redirect(`${systemConfig.prefixAdmin}/accounts/edit/${id}`);
+    }
+    else {
+        await Account.updateOne({ _id: id }, req.body);
+
+        req.flash('success', 'Update account successfully');
+        res.redirect(`${systemConfig.prefixAdmin}/accounts`);
+    }
+}

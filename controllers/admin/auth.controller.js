@@ -36,3 +36,9 @@ module.exports.loginPost = async (req, res) => {
         }
     }
 };
+
+// [get] /admin/auth/logout
+module.exports.logout = (req, res) => {
+    res.clearCookie("token");
+    res.redirect(`${systemConfig.prefixAdmin}/auth/login`);
+};

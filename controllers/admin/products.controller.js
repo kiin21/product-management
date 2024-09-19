@@ -120,9 +120,13 @@ module.exports.deleteItem = async (req, res) => {
         { _id: id },
         {
             deleted: true,
-            deletedAt: currentTime
+            deletedBy: {
+                account_id: res.locals.user._id,
+                deletedAt: currentTime
+            }
         });
 
+    req.flash('success', 'Delete product successfully');
     // res.redirect('back');
     res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
@@ -170,12 +174,13 @@ module.exports.createPost = async (req, res) => {
     }
 
     req.body.createdBy = {
-        account_id: String(res.locals.user._id)
+        account_id: res.locals.user._id
     }
 
     let newProduct = new Product(req.body);
     await newProduct.save();
 
+    req.flash('success', 'Create product successfully');
     res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
 

@@ -7,7 +7,6 @@ const md5 = require('md5')
 module.exports.login = (req, res) => {
 
     if (req.cookies.token) {
-        
         res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
     }
     else {

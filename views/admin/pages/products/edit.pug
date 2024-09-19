@@ -23,7 +23,7 @@ block main
                 value=product.title
                 required
             )
-        div(class='form-group')
+        div(class='form-group mt-3')
             label(for='product_category_id') Product category 
             select(
                 name='product_category_id'
@@ -33,7 +33,29 @@ block main
                 option(value='') Choose product category
                 if(category)
                     +select-tree(category, 0, product.product_category_id)
-        div(class='form-group')
+
+        div(class='form-group form-check form-check-inline mt-3')
+            input(
+                type='radio'
+                class='form-check-input'
+                id='featured'
+                name='featured'
+                value='true'
+                checked=product.featured
+            )
+            label(for='statusAvailable' class='form-check-label') Featured product
+        div(class='form-group form-check form-check-inline mt-3')
+            input(
+                type='radio'
+                class='form-check-input'
+                id='featured'
+                name='featured'
+                value='false'
+                checked=!product.featured
+            )
+            label(for='statusUnavailable' class='form-check-label') Not featured product    
+
+        div(class='form-group mt-3')
             label(for='describe') Description
             textarea(
                 class='form-control'
@@ -42,7 +64,7 @@ block main
                 rows="5"
                 value=product.description
             ) !{product.description}
-        div(class='form-group')
+        div(class='form-group mt-3')
             label(for='price') Price
             input(
                 type='number'
@@ -51,7 +73,7 @@ block main
                 name='price'
                 value=product.price
             )
-        div(class='form-group')
+        div(class='form-group mt-3')
             label(for='discount') Discount Percentage (0%-100%)
             input(
                 type='text'  
@@ -63,7 +85,7 @@ block main
                 max=100
             )
 
-        div(class='form-group')
+        div(class='form-group mt-3')
             label(for='quantity') Quantity
             input(
                 type='number'
@@ -74,7 +96,7 @@ block main
                 min=0
             )
         div(
-            class='form-group' 
+            class='form-group mt-3' 
             upload-image
         )
             label(for='thumbnail') Image
@@ -101,7 +123,7 @@ block main
                 span
 
 
-        div(class='form-group') 
+        div(class='form-group mt-3') 
             label(for='position') Position 
             input(
                 type='number'
@@ -113,7 +135,7 @@ block main
                 value=product.position
             )
 
-        div(class='form-group form-check form-check-inline')
+        div(class='form-group form-check form-check-inline mt-3')
             input(
                 type='radio'
                 class='form-check-input'
@@ -124,7 +146,7 @@ block main
             )
             label(for='statusAvailable' class='form-check-label') Available 
 
-        div(class='form-group form-check form-check-inline')
+        div(class='form-group form-check form-check-inline mt-3')
             input(
                 type='radio'
                 class='form-check-input'
@@ -137,7 +159,7 @@ block main
 
 
 
-        div(class='form-group')
+        div(class='form-group mt-3')
             button(
                 type='submit'
                 class='btn btn-primary'

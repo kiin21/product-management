@@ -33,7 +33,27 @@ block main
                 if(category)
                     +select-tree(category)
 
-        div(class='form-group')
+        div(class='form-group form-check form-check-inline mt-3')
+            input(
+                type='radio'
+                class='form-check-input'
+                id='featured'
+                name='featured'
+                value='true'
+            )
+            label(for='statusAvailable' class='form-check-label') Featured product
+        div(class='form-group form-check form-check-inline mt-3')
+            input(
+                type='radio'
+                class='form-check-input'
+                id='featured'
+                name='featured'
+                value='false'
+                checked
+            )
+            label(for='statusUnavailable' class='form-check-label') Not featured product
+
+        div(class='form-group mt-3')
             label(for='describe') Description
             textarea(
                 class='form-control'
@@ -41,7 +61,7 @@ block main
                 name='description'
                 rows="5"
             )
-        div(class='form-group')
+        div(class='form-group mt-3')
             label(for='price') Price
             input(
                 type='number'
@@ -50,7 +70,7 @@ block main
                 name='price'
                 required
             )
-        div(class='form-group')
+        div(class='form-group mt-3')
             label(for='discount') Discount 
             input(
                 type='number' 
@@ -59,7 +79,7 @@ block main
                 name='discountPercentage'
                 value=0
             )
-        div(class='form-group')
+        div(class='form-group mt-3')
             label(for='quantity') Quantity
             input(
                 type='number'
@@ -70,7 +90,7 @@ block main
                 min=0
             )
         div(
-            class='form-group' 
+            class='form-group mt-3' 
             upload-image
         )
             label(for='thumbnail') Image
@@ -97,7 +117,7 @@ block main
                 span
 
 
-        div(class='form-group') 
+        div(class='form-group mt-3') 
             label(for='position') Position 
             input(
                 type='number'
@@ -107,7 +127,7 @@ block main
                 placeholder='Auto increase'
                 min=1
             )
-        div(class='form-group form-check form-check-inline')
+        div(class='form-group form-check form-check-inline mt-3')
             input(
                 type='radio'
                 class='form-check-input'
@@ -117,7 +137,7 @@ block main
                 checked
             )
             label(for='statusAvailable' class='form-check-label') Available 
-        div(class='form-group form-check form-check-inline')
+        div(class='form-group form-check form-check-inline mt-3')
             input(
                 type='radio'
                 class='form-check-input'

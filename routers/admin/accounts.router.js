@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../../controllers/admin/accounts.controller');
-const multer = require('multer')
 const validatorCreateAccount = require('../../validates/admin/account.validate');
-
+const multer = require('multer')
 
 const uploadImage = require('../../middlewares/admin/uploadImageToClould.middlewares');
-const upload = multer({})
+const upload = multer()
 
 router.get('/', controller.index);
 

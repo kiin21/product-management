@@ -66,6 +66,7 @@ block main
                             th Status 
                             th Position
                             th Created by
+                            th Latest update
                             th Action
 
                     tbody#sortable
@@ -109,6 +110,7 @@ block main
                                             value=product.position
                                             readonly=hasEditPermission ? false : true
                                         )
+                                //- CREATED BY AND LATEST UPDATED BY       
                                 if(product.createdBy.account)
                                     td 
                                         p #{product.createdBy.account.fullname}
@@ -117,6 +119,14 @@ block main
                                 else 
                                     td N/A
 
+                                if(product.latestUpdatedBy)
+                                    td 
+                                        p #{product.latestUpdatedBy.account.fullname}
+                                        -var time = product.latestUpdatedBy.updatedAt 
+                                        p #{moment(time).format('DD/MM/YYYY HH:mm:ss')}
+                                else 
+                                    td N/A
+                                //- END CREATED BY AND LATEST UPDATED BY  
                                 td
                                     a(
                                         href=`${prefixAdmin}/products/detail/${product._id}`

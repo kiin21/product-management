@@ -51,9 +51,25 @@ module.exports.products = async (req, res) => {
         .limit(paginationObj.limitItems)
         .skip((paginationObj.currentPage - 1) * paginationObj.limitItems);
 
+    // retrive creator
     for (const product of products) {
         let account = await Account.findOne({ _id: product.createdBy.account_id });
         product.createdBy.account = account;
+    }
+    //retrive lastest updater
+    for (const product of products) {
+        let latestUpdatedUser = null;
+        if (product.updatedBy.length > 0) {
+            let id = product.updatedBy[product.updatedBy.length - 1].account_id;
+            latestUpdatedUser = await Account.findOne({ _id: id });
+            product.latestUpdatedBy = {
+                account: latestUpdatedUser,
+                updatedAt: product.updatedBy[product.updatedBy.length - 1].updatedAt
+            }
+        }
+        else {
+            product.latestUpdatedBy = null;
+        }
     }
 
     res.render("admin/pages/products/index", {
@@ -69,7 +85,18 @@ module.exports.changeStatus = async (req, res) => {
     let status = req.params.status;
     let ID = req.params.ID;
 
-    await Product.updateOne({ _id: ID }, { status: status });
+    const updatedBy = {
+        account_id: res.locals.user._id,
+        updatedAt: new Date()
+    }
+    console.log("status", status);
+    await Product.updateOne(
+        { _id: ID },
+        {
+            status: status,
+            $push: { updatedBy: updatedBy }
+        }
+    );
 
     req.flash('success', 'Change status successfully');
 
@@ -81,27 +108,54 @@ module.exports.changeMultiStatus = async (req, res) => {
     let IDs = req.body.IDs.split(', ');
     let status = req.body.status;
 
+    const updatedBy = {
+        account_id: res.locals.user._id,
+        updatedAt: new Date()
+    }
 
     switch (status) {
+
         case 'available':
-            await Product.updateMany({ _id: { $in: IDs } }, { status: 'available' });
+            await Product.updateMany(
+                { _id: { $in: IDs } },
+                {
+                    status: 'available',
+                    $push: { updatedBy: updatedBy }
+                }
+            );
             req.flash('success', `Change status of ${IDs.length} successfully`);
             break;
+
         case 'unavailable':
-            await Product.updateMany({ _id: { $in: IDs } }, { status: 'unavailable' });
+            await Product.updateMany(
+                { _id: { $in: IDs } },
+                {
+                    status: 'unavailable',
+                    $push: { updatedBy: updatedBy }
+                }
+            );
             req.flash('success', `Change status of ${IDs.length} product(s) successfully`);
             break;
+
         case 'delete-all':
             await Product.updateMany({ _id: { $in: IDs } }, { deleted: true });
             req.flash('success', `Delete successfully`);
             break;
+
         case 'change-position':
             for (const product of IDs) {
                 let [id, position] = product.split('-');
                 position = parseInt(position);
-                await Product.updateOne({ _id: id }, { position: position });
+                await Product.updateOne(
+                    { _id: id },
+                    {
+                        position: position,
+                        $push: { updatedBy: updatedBy }
+                    }
+                );
             }
             break;
+
         default:
             break;
     }
@@ -218,7 +272,16 @@ module.exports.editPostPatch = async (req, res) => {
     console.log("req.body product edit", req.body);
 
     try {
-        await Product.updateOne({ _id: req.params.id }, req.body);
+        const updatedBy = {
+            account_id: res.locals.user._id,
+            updatedAt: new Date()
+        }
+
+        await Product.updateOne({ _id: req.params.id }, {
+            ...req.body,
+            $push: { updatedBy: updatedBy }
+        });
+
         req.flash('success', 'Edit product successfully');
     } catch (err) {
         req.flash('error', 'Edit product failed');

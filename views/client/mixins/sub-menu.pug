@@ -1,0 +1,7 @@
+mixin sub-menu(records, path)
+    ul
+        each record in records
+            li 
+                a(href=`${path}/${record.slug}`)  #{record.title}
+                if(record.children)
+                    +sub-menu(record.children, `${path}/${record.slug}`)

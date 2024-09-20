@@ -17,14 +17,21 @@ module.exports.index = async (req, res) => {
             featured: true,
             status: "available"
         }
-    );
+    ).limit(6);
 
-    const newProducts = productHelper.fixedPrice(featuredProducts);
+    // get latest products
+    const latestProducts = await Product.find(
+        {
+            deleted: false,
+            status: "available"
+        }
+    ).sort({ position: "desc" }).limit(6);
 
     res.render("client/pages/home/index", {
         pageTitle: "Home",
         layoutProductCategory: newRecords,
-        featuredProducts: newProducts
+        featuredProducts: productHelper.fixedPrice(featuredProducts),
+        latestProducts: productHelper.fixedPrice(latestProducts)
     });
 }
 

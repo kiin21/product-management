@@ -1,5 +1,4 @@
 const Account = require('../../models/account.model');
-
 const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
 const filterBarHelper = require("../../helpers/filter");

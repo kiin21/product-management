@@ -15,12 +15,15 @@ body {
 
 /* Header Styles */
 .header {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px
+    solid #ddd;
   padding: 10px 0;
   height: 70px;
 }
 
-.header .inner-logo img {
+.header
+  .inner-logo
+  img {
   width: 50px;
   height: auto;
 }
@@ -33,7 +36,9 @@ body {
   flex-wrap: wrap;
 }
 
-.inner-menu > ul > li {
+.inner-menu
+  > ul
+  > li {
   margin-left: 20px;
 }
 
@@ -41,14 +46,20 @@ body {
   position: relative;
 }
 
-.inner-menu ul li a {
+.inner-menu
+  ul
+  li
+  a {
   display: block;
   padding: 10px;
   text-decoration: none;
   color: #333;
 }
 
-.inner-menu ul li a:hover {
+.inner-menu
+  ul
+  li
+  a:hover {
   background-color: #f0f0f0;
 }
 
@@ -59,27 +70,40 @@ body {
   top: 100%;
   right: 0;
   background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  border: 1px solid
+    #ddd;
   min-width: 200px;
   z-index: 1000;
 }
 
-.inner-menu ul ul ul {
+.inner-menu
+  ul
+  ul
+  ul {
   top: 0;
   right: 100%;
 }
 
-.inner-menu li:hover > ul {
+.inner-menu
+  li:hover
+  > ul {
   display: block;
 }
 
-.inner-menu ul ul li {
+.inner-menu
+  ul
+  ul
+  li {
   display: block;
   width: 100%;
   margin: 0;
 }
 
-.inner-menu ul ul li a {
+.inner-menu
+  ul
+  ul
+  li
+  a {
   padding: 10px 15px;
   text-align: left;
 }
@@ -88,7 +112,8 @@ body {
 .footer {
   background-color: #3d3f41;
   padding: 20px 0;
-  border-top: 1px solid #3036e7;
+  border-top: 1px
+    solid #3036e7;
   color: #fff;
   text-align: center;
   margin-top: auto;
@@ -101,7 +126,8 @@ body {
   margin: -15px;
 }
 
-.col-12, .col-4 {
+.col-12,
+.col-4 {
   padding: 15px;
 }
 
@@ -116,18 +142,50 @@ body {
 }
 
 .product-item {
-  border: 1px solid #ddd;
+  border: 1px solid
+    #ddd;
   padding: 1rem;
   border-radius: 0.25rem;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px
+    4px
+    rgba(
+      0,
+      0,
+      0,
+      0.1
+    );
+  height: 100%;
 }
 
-.inner-image img {
+.product-item
+  .inner-image {
   max-width: 100%;
-  height: auto;
-  display: block;
-  margin-bottom: 1rem;
+  aspect-ratio: 4/4;
+  border-bottom: 1px
+    solid #ddd;
+  position: relative;
+}
+
+.product-item
+  .inner-image
+  img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-item
+  .inner-featured {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #28a745;
+    color: white;
+    padding: 3px 6px;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 8px
 }
 
 .inner-content {

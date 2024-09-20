@@ -18,35 +18,46 @@ module.exports.index = async (req, res) => {
 
 // [get] /admin/product-category/create
 module.exports.create = async (req, res) => {
-    let filter = { deleted: false };
+    const hasCreatePermission = res.locals.role.permission.some(p => p['products-category_create'] === true)
+    if (hasCreatePermission) {
+        let filter = { deleted: false };
 
-    let records = await ProductCategory.find(filter);
+        let records = await ProductCategory.find(filter);
 
 
 
-    res.render("admin/pages/product-category/create", {
-        pageTitle: "Create Product Category",
-        records: createTree.tree(records)
-    });
+        res.render("admin/pages/product-category/create", {
+            pageTitle: "Create Product Category",
+            records: createTree.tree(records)
+        });
+    } else {
+        return res.status(403).json()
+    }
 }
 
 // [post] /admin/product-category/create
 module.exports.createPost = async (req, res) => {
-    req.body.parent_id = String(req.body.parent_id);
-    req.body.description = String(req.body.description);
+    const hasCreatePermission = res.locals.role.permission.some(p => p['products-category_create'] === true)
+    if (hasCreatePermission) {
+        req.body.parent_id = String(req.body.parent_id);
+        req.body.description = String(req.body.description);
 
-    if (!req.body.position) {
-        let amount = await ProductCategory.countDocuments();
-        req.body.position = amount + 1;
+
+        if (!req.body.position) {
+            let amount = await ProductCategory.countDocuments();
+            req.body.position = amount + 1;
+        } else {
+            req.body.position = parseInt(req.body.position);
+        }
+
+        let record = new ProductCategory(req.body);
+        await record.save();
+
+
+        res.redirect(`${systemConfig.prefixAdmin}/product-category`);
     } else {
-        req.body.position = parseInt(req.body.position);
+        return res.status(403).json()
     }
-
-    let record = new ProductCategory(req.body);
-    await record.save();
-
-
-    res.redirect(`${systemConfig.prefixAdmin}/product-category`);
 }
 
 module.exports.deleteCategory = async (req, res) => {

@@ -2,7 +2,7 @@ const Role = require('../../models/role.model');
 const systemConfig = require('../../config/system');
 
 // [get] /admin/roles
-module.exports.roles = async (req, res) => {
+module.exports.roles = async(req, res) => {
     let filter = { deleted: false };
     let roles = await Role.find(filter);
 
@@ -14,14 +14,14 @@ module.exports.roles = async (req, res) => {
 }
 
 // [get] /admin/create
-module.exports.create = async (req, res) => {
+module.exports.create = async(req, res) => {
     res.render('admin/pages/roles/create', {
         pageTitle: 'Add new role'
     });
 }
 
 // [post] /admin/create
-module.exports.createPost = async (req, res) => {
+module.exports.createPost = async(req, res) => {
     let record = new Role(req.body);
     await record.save();
 
@@ -31,17 +31,17 @@ module.exports.createPost = async (req, res) => {
 }
 
 // [get] /admin/edit/:id
-module.exports.edit = async (req, res) => {
-    let id = req.params.id;
-    let role = await Role.findById(id);
+module.exports.edit = async(req, res) => {
+        let id = req.params.id;
+        let role = await Role.findById(id);
 
-    res.render('admin/pages/roles/edit', {
-        pageTitle: 'Edit role',
-        role: role
-    });
-}
-// [patch] /admin/edit/:id
-module.exports.editPatch = async (req, res) => {
+        res.render('admin/pages/roles/edit', {
+            pageTitle: 'Edit role',
+            role: role
+        });
+    }
+    // [patch] /admin/edit/:id
+module.exports.editPatch = async(req, res) => {
     let id = req.params.id;
 
     await Role.updateOne({ _id: id }, req.body);
@@ -50,7 +50,7 @@ module.exports.editPatch = async (req, res) => {
 }
 
 // [get] /admin/detail/:id
-module.exports.detail = async (req, res) => {
+module.exports.detail = async(req, res) => {
     let id = req.params.id;
     let role = await Role.findById(id);
 
@@ -61,7 +61,7 @@ module.exports.detail = async (req, res) => {
 }
 
 // [delete] /admin/delete/:id
-module.exports.delete = async (req, res) => {
+module.exports.delete = async(req, res) => {
     let id = req.params.id;
 
     await Role.updateOne({ _id: id }, { deleted: true, deletedAt: new Date() });
@@ -70,7 +70,7 @@ module.exports.delete = async (req, res) => {
 }
 
 // [get] /admin/roles/permissions
-module.exports.permissions = async (req, res) => {
+module.exports.permissions = async(req, res) => {
     let filter = { deleted: false };
 
     let records = await Role.find(filter);
@@ -82,7 +82,7 @@ module.exports.permissions = async (req, res) => {
 }
 
 // [patch] /admin/roles/permissions
-module.exports.permissionsPatch = async (req, res) => {
+module.exports.permissionsPatch = async(req, res) => {
     let records = JSON.parse(req.body.permissions);
 
     records.forEach(async record => {

@@ -1,0 +1,14 @@
+extend ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/product-layout.pug
+
+block main
+    .container.my-3 
+        .row 
+            .col-12
+                +box-head('Search results')
+        if(products.length > 0)
+            +product-grid(products)
+        else
+            .alert.alert-warning(role='alert')
+                | No products found.

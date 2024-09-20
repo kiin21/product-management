@@ -5,7 +5,7 @@ const { isDescendant } = require("../../helpers/isDescendant");
 
 // [get] /products
 module.exports.index = async (req, res) => {
-    let products = await Product.find({});
+    let products = await Product.find({deleted: false, status: 'available'});
 
     const newProducts = productHelper.fixedPrice(products);
 
@@ -23,6 +23,8 @@ module.exports.detail = async (req, res) => {
                 slug: req.params.slugProduct,
                 deleted: false,
             });
+        
+        console.log(product,'---------------------------------');
 
         if (product.product_category_id) {
             const category = await ProductCategory.findOne({
@@ -44,7 +46,7 @@ module.exports.detail = async (req, res) => {
         });
 
     } catch (err) {
-        res.render("/products")
+        res.status(404).json({ message: "Product not found" });
     }
 }
 

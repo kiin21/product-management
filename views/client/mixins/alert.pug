@@ -1,0 +1,16 @@
+mixin alert(_timeout) 
+    - if (messages.success)
+        .message.info
+            div(
+                class='alert alert-success' 
+                id='alert-popup'
+                timeout=_timeout
+            ) #{messages.success} <span close-alert>x</span>
+
+    - if (messages.error)
+        .message.info
+            div(
+                class='alert alert-danger' 
+                id='alert-popup'
+                timeout=_timeout
+            ) #{messages.error} <span close-alert>x</span>

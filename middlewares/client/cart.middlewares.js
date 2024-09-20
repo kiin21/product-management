@@ -12,6 +12,10 @@ module.exports.cartId = async (req, res, next) => {
         });
     } else {
         const cart = await Cart.findById(req.cookies.cartId);
+        const totalProductsInCart = cart.products.reduce((total, product) => total + product.quantity, 0);
+        cart.totalProducts = totalProductsInCart;
+
+        res.locals.miniCart = cart;
     }
 
     next();

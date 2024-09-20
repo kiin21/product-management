@@ -33,34 +33,5 @@ header.header
                             - const pathProduct = '/products'
                             a(href=pathProduct) Product page
                             +sub-menu(layoutProductCategory, pathProduct)
-                            //- ul
-                            //-     li
-                            //-         a(href='/products/slug-1') Product 1
-                            //-         ul
-                            //-             li
-                            //-                 a(href='/products/slug-2-1') Product 2.111
-                            //-             li(class='sub-menu')
-                            //-                 a(href='/products/slug-2-2') Product 2.9999
-                            //-                 ul
-                            //-                     li
-                            //-                         a(href='/products/slug-2-2-1') Product 2.2.111111111111111111111111111111111111111111111111
-                            //-                     li(class='sub-menu')
-                            //-                         a(href='/products/slug-2-2-2') Product 2.2.2
-                            //-                         ul
-                            //-                             li
-                            //-                                 a(href='/products/slug-2-2-2-1') Product 2.2.2.1
-                            //-     li(class='sub-menu')
-                            //-         a(href='/products/slug-2') Product 2
-                            //-         ul
-                            //-             li
-                            //-                 a(href='/products/slug-2-1') Product 2.1
-                            //-             li(class='sub-menu')
-                            //-                 a(href='/products/slug-2-2') Product 2.2
-                            //-                 ul
-                            //-                     li
-                            //-                         a(href='/products/slug-2-2-1') Product 2.2.1
-                            //-                     li(class='sub-menu')
-                            //-                         a(href='/products/slug-2-2-2') Product 2.2.2
-                            //-                         ul
-                            //-                             li
-                            //-                                 a(href='/products/slug-2-2-2-1') Product 2.2.2.1
+                        li 
+                            a(href='/cart') Cart (#{miniCart ? miniCart.totalProducts : 0})

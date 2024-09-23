@@ -44,7 +44,8 @@ block main
                                 td #{item.total}
 
                                 td
-                                    a.btn.btn-danger(href=`/cart/delete/${item.productInfo._id}`) Delete
+                                    form(action=`/cart/delete/${item.productInfo._id}?_method=DELETE`, method="POST")
+                                        button.btn.btn-danger(type="submit") Delete
 
                 h3(class="text-right") Total: #{cart.total}
 

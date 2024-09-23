@@ -23,8 +23,6 @@ module.exports.detail = async (req, res) => {
                 slug: req.params.slugProduct,
                 deleted: false,
             });
-        
-        console.log(product,'---------------------------------');
 
         if (product.product_category_id) {
             const category = await ProductCategory.findOne({

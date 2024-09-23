@@ -459,3 +459,15 @@ body {
   text-align: center;
 }
 /* End alerts  */
+
+/* box-head */
+.box-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: green;
+  font-size: 2rem; /* Increased font size */
+  font-weight: bold;
+}
+/* end box-head */

@@ -7,7 +7,10 @@ module.exports.index = async (req, res) => {
     const cartId = req.cookies.cartId;
     const cart = await Cart.findOne({ _id: cartId });
 
-    if (cart.products.length > 0) {
+    if (cart.products.length === 0) {
+        req.flash('error', 'Your cart is empty.');
+        res.redirect("/");
+    } else {
         for (item of cart.products) {
             const productId = item.product_id;
             const product = await Product.findOne({
@@ -20,11 +23,10 @@ module.exports.index = async (req, res) => {
             item.total = product.newPrice * item.quantity;
         }
         cart.total = cart.products.reduce((total, item) => total + item.total, 0);
-        res.render("client/pages/cart/index",{
+        res.render("client/pages/cart/index", {
             cart: cart
         });
     };
-
 }
 // [post] /cart/add/:productId
 module.exports.add = async (req, res) => {

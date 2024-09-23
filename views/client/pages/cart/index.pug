@@ -38,6 +38,7 @@ block main
                                         type="number",
                                         value=item.quantity,
                                         min="1",
+                                        max=item.productInfo.stock,
                                         item-id=item.productInfo._id,
                                         style="width: 50px",
                                     )
@@ -51,3 +52,5 @@ block main
 
                 div(class="text-right mt-3")
                     a(href="/checkout" class="btn btn-success") Checkout
+
+    script(src="/js/cart.js")

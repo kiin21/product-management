@@ -66,7 +66,20 @@ module.exports.order = async (req, res) => {
 
 //[GET] /checkout/success/:orderId
 module.exports.success = async (req, res) => {
+    const order = await Order.findOne({ _id: req.params.orderId });
+
+    order.totalPrice = 0;
+    for (const item of order.products) {
+        const productInfo = await Product.findOne({ _id: item.product_id }).select("title price discountPercentage thumbnail");
+        item.productInfo = productInfo;
+
+        item.newPrice = helper.fixedPrice([productInfo])[0].newPrice;
+        item.totalPrice = item.newPrice * item.quantity;
+        order.totalPrice += item.totalPrice;
+    }
+
     res.render("client/pages/checkout/success", {
         pageTitle: "Order success",
+        order: order
     });
 };

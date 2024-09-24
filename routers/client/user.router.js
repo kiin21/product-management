@@ -9,4 +9,12 @@ router.post('/register',
     validator.register,
     controller.registerPost);
 
+router.get('/login', controller.login);
+
+router.post('/login',
+    validator.loginPost,
+    controller.loginPost);
+
+router.get('/logout', controller.logout);
+
 module.exports = router;

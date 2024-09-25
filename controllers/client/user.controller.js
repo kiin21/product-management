@@ -48,15 +48,20 @@ module.exports.loginPost = async (req, res) => {
         return;
     }
 
-    const cartID = req.cookies.cartID;
-    await Cart.updateOne(
-        {
-            _id: cartID
-        },
-        {
-            user_id: user._id
-        }
-    )
+    const cart = await Cart.findOne({ user_id: user._id });
+    if (cart) {
+        res.cookie('cartID', cart._id)
+    } else {
+        const cartID = req.cookies.cartID;
+        await Cart.updateOne(
+            {
+                _id: cartID
+            },
+            {
+                user_id: user._id
+            }
+        )
+    }
 
     res.cookie('userToken', user.userToken)
     res.redirect('/');
@@ -65,6 +70,7 @@ module.exports.loginPost = async (req, res) => {
 // [get] /user/logout
 module.exports.logout = (req, res) => {
     res.clearCookie('userToken');
+    res.clearCookie('cartId');
     res.redirect('/');
 }
 

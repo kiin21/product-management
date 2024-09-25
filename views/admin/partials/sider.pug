@@ -3,7 +3,7 @@
         ul 
             li 
                 a(href=`${prefixAdmin}/dashboard`) Dashboard 
-            
+
             - var hasProductsViewPermission = role.permission.some(p => p['products_view'] === true)
             if hasProductsViewPermission
                 li 
@@ -24,3 +24,5 @@
             if hasAccountViewPermission    
                 li 
                     a(href=`${prefixAdmin}/accounts`) Accounts
+            li 
+                a(href=`${prefixAdmin}/setting/general`) General settings

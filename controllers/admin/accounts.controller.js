@@ -21,7 +21,7 @@ module.exports.index = async (req, res) => {
     });
 }
 
-// [get] /admin/create
+// [get] /admin/accounts/create
 module.exports.create = async (req, res) => {
     let filter = { deleted: false };
     let roles = await Role.find(filter);
@@ -31,7 +31,7 @@ module.exports.create = async (req, res) => {
     });
 }
 
-// [post] /admin/create
+// [post] /admin/accounts/create
 module.exports.createPost = async (req, res) => {
     req.body.password = md5(req.body.password);
 

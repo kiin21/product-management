@@ -1,0 +1,82 @@
+extends ../../layouts/default.pug
+
+block main 
+    h1 General settings 
+
+    form(
+        action=`${prefixAdmin}/setting/general?_method=PATCH`,
+        method='POST',
+        enctype='multipart/form-data'
+    )
+        div(class='form-group')
+            label(for='websiteName') Website name
+            input(
+                type='text',
+                class='form-control',
+                id='websiteName',
+                name='websiteName'
+                value=setting  ? setting.websiteName : ''
+            )
+        div(class='form-group')
+            label(for='phone') Phone number
+            input(
+                type='text',
+                class='form-control',
+                id='phone',
+                name='phone'
+                value=setting ? setting.phone : ''
+            )
+        div(
+            class='form-group mt-3' 
+            upload-image
+        )
+            label(for='thumbnail') Logo
+            input(
+                type='file'
+                class='form-control'
+                id='logo'
+                name='logo'
+                accept='image/*'
+                upload-image-input
+            )
+        div(
+            class='form-group mt-3'
+            image-preview-container
+        )
+            img(
+                upload-image-preview,
+                src=setting ? setting.logo : '',
+                alt='Image preview',
+            )
+        div(class='form-group mt-3') 
+            label(for='email') Email
+            input(
+                type='email'
+                class='form-control'
+                id='email'
+                name='email'
+                value=setting ? setting.email : ''
+            )
+        div(class='form-group mt-3') 
+            label(for='address') Address
+            input(
+                type='text'
+                class='form-control'
+                id='address'
+                name='address'
+                value=setting ? setting.address : ''
+            )
+        div(class='form-group mt-3') 
+            label(for='copyright') Copyright
+            input(
+                type='text'
+                class='form-control'
+                id='copyright'
+                name='copyright'
+                value=setting ? setting.copyright : ''
+            )
+        div(class='form-group mt-3')
+            button(
+                type='submit'
+                class='btn btn-primary'
+            ) Save

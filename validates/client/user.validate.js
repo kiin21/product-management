@@ -29,3 +29,18 @@ module.exports.loginPost = (req, res, next) => {
     }
     next();
 }
+
+module.exports.confirmPasswordPost = (req, res, next) => {
+    if (!req.body.password || !req.body.confirmPassword) {
+        req.flash('error', 'Please enter password and confirm password');
+        res.redirect('/user/password/reset');
+        return;
+    }
+    if (req.body.password !== req.body.confirmPassword) {
+        req.flash('error', 'Password and confirm password do not match');
+        res.redirect('/user/password/reset');
+        return;
+    }
+    next();
+}
+

@@ -17,3 +17,7 @@ if (closeAlert) {
     });
 }
 // end alert message
+
+//countdown clock for OTP
+
+//end countdown clock for OTP

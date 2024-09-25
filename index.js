@@ -1,5 +1,9 @@
 const express = require('express');
+require('dotenv').config();
 const flash = require('express-flash');
+
+const app = express();
+const port = process.env.PORT;
 
 const routerAdmin = require('./routers/admin/index.router.js');
 const routerClient = require('./routers/client/index.router.js');
@@ -12,15 +16,7 @@ const database = require('./config/database.js');
 const path = require('path');
 const moment = require('moment');
 
-
-const app = express();
-require('dotenv').config();
-const port = process.env.PORT;
-
 database.connect();
-
-// create application/x-www-form-urlencoded parser
-const urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 //App local variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
@@ -63,5 +59,4 @@ routerAdmin(app);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-
 });

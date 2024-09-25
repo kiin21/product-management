@@ -3,11 +3,12 @@ const streamifier = require('streamifier');
 
 // Configuration cloudinary
 cloudinary.config({
-    cloud_name: 'dtaoxer0u',
-    api_key: '927454746273598',
-    api_secret: '9R9wK9A5ScSVrN6LdI0DOasT2-E'
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
 });
 // End configuration cloudinary
+
 
 module.exports.upload = (req, res, next) => {
     if (req.file) {

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../../controllers/client/user.controller');
 const validator = require('../../validates/client/user.validate');
+const middleware = require('../../middlewares/client/user.middlewares');
 
 router.get('/register', controller.register);
 
@@ -16,5 +17,22 @@ router.post('/login',
     controller.loginPost);
 
 router.get('/logout', controller.logout);
+
+router.get('/password/recover', controller.recoverPassword);
+
+router.post('/password/recover', controller.recoverPasswordPost);
+
+router.get('/password/otp',
+    middleware.checkIfOTPExpired,
+    controller.otpPassword);
+
+router.post('/password/otp',
+    controller.otpPasswordPost);
+
+router.get('/password/reset', controller.resetPassword);
+
+router.post('/password/reset',
+    validator.confirmPasswordPost,
+    controller.resetPasswordPost);
 
 module.exports = router;

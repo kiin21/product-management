@@ -1,7 +1,54 @@
 extends ../../layouts/default.pug
 
 block main
-    h1 Dashboard
-    div #{user.fullname}
-    div #{role.title}
-    div #{role}
+    h1 Dashboard 
+
+    .row.mt-4 
+        .col-12 
+            .card.mb-4 
+                .card-header #{pageTitle}
+                .card-body
+                    if user.avatar 
+                        img(
+                            src=user.avatar 
+                            style="height: 100px; border-bottom: 15px;"
+                        )
+                    if user.fullname 
+                        p Fullname: <b>#{user.fullname}</b>
+                    if user.email
+                        p Email: <b>#{user.email}</b>
+                    if user.phone
+                        p Phone: <b>#{user.phone}</b>
+                    if role.title 
+                        p Role: <b>#{role.title}</b>
+
+        .col-6 
+            .card.mb-4 
+                .card-header Product category
+                .card-body
+                    p Total product categories: <b>#{stat.productCategory.total}</b>
+                    p Active product categories: <b>#{stat.productCategory.active}</b>
+                    p Inactive product categories: <b>#{stat.productCategory.inactive}</b>
+
+        .col-6 
+            .card.mb-4 
+                .card-header Product 
+                .card-body
+                    p Total products: <b>#{stat.product.total}</b>
+                    p Active products: <b>#{stat.product.active}</b>
+                    p Inactive products: <b>#{stat.product.inactive}</b>
+
+        .col-6 
+            .card.mb-4 
+                .card-header Admin accounts
+                .card-body
+                    p Total accounts: <b>#{stat.admin.total}</b>
+                    p Active accounts: <b>#{stat.admin.active}</b>
+                    p Inactive accounts: <b>#{stat.admin.inactive}</b>
+        .col-6 
+            .card.mb-4 
+                .card-header Client accounts
+                .card-body
+                    p Total accounts: <b>#{stat.user.total}</b>
+                    p Active accounts: <b>#{stat.user.active}</b>
+                    p Inactive accounts: <b>#{stat.user.inactive}</b>

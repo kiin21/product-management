@@ -1,0 +1,33 @@
+extend ../../layouts/default.pug
+include ../../mixins/box-head.pug
+
+block main 
+    .container.my-3
+        .row
+            .col-12 
+                +box-head('Profile')
+
+        if(user.avatar)
+            img(src=user.avatar width="150px" class=mb-3)
+        else 
+            img(src="/admin/images/default-avatar.jpg" width="150px" class=mb-3)
+
+        if(user.fullname)
+            p Fullname: <b>#{user.fullname}</b>
+        else
+            p Fullname: Not set
+
+        if (user.email)
+            p Email: <b>#{user.email}</b>
+        else
+            p Email: Not set
+
+        if (user.phone)
+            p Phone: <b>#{user.phone}</b>
+        else 
+            p Phone: Not set
+
+        p 
+            span Status: 
+            span 
+                <b> #{user.status==='active' ? "Active" : "Inactive"}</b>

@@ -80,7 +80,8 @@ module.exports.recoverPasswordPost = async (req, res) => {
     await recoverPassword.save();
 
     const subject = 'Password Recovery';
-    const contentHTML = `<h1>Your OTP is: <b>${recoverPassword.OTP}</b>. This will expire in 5 minutes.</h1>`;
+    const contentHTML =
+        `<h1>Your OTP is: <b>${recoverPassword.OTP}</b>. This will expire in 5 minutes.</h1>`;
 
     sendMailHelper.sendMail(
         recoverPassword.email,
@@ -138,3 +139,12 @@ module.exports.resetPasswordPost = async (req, res) => {
     res.redirect('/user/login');
 }
 
+// [get] /user/profile
+module.exports.profile = async (req, res) => {
+    const userToken = req.cookies.userToken;
+    const user = await User.findOne({ userToken: userToken });
+    res.render("client/pages/user/profile", {
+        pageTitle: "Profile",
+        user: user
+    });
+}

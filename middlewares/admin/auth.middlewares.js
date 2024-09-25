@@ -1,4 +1,3 @@
-const { application } = require('express');
 const systemConfig = require('../../config/system');
 const Account = require('../../models/account.model');
 const Role = require('../../models/role.model');

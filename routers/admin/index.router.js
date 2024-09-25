@@ -13,6 +13,7 @@ const authMiddleware = require('../../middlewares/admin/auth.middlewares');
 const prefixAdmin = systemConfig.prefixAdmin;
 
 module.exports = (app) => {
+    console.log("You are in this admin route");
     app.use(prefixAdmin + '/dashboard', authMiddleware.requireAuth, dashboardRouter);
     app.use(prefixAdmin + '/products', authMiddleware.requireAuth, productsRouter);
     app.use(prefixAdmin + '/product-category', authMiddleware.requireAuth, productCategoryRouter);
@@ -20,9 +21,7 @@ module.exports = (app) => {
     app.use(prefixAdmin + '/accounts', authMiddleware.requireAuth, accountsRouter);
     app.use(prefixAdmin + '/auth', authRouter);
     app.use(prefixAdmin + '/my-account', authMiddleware.requireAuth, accountRouter);
-    app.use(prefixAdmin + '/setting',
-        authMiddleware.requireAuth,
-        settingRouter);
+    app.use(prefixAdmin + '/setting', authMiddleware.requireAuth, settingRouter);
 };
 
 

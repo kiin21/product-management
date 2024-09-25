@@ -6,28 +6,26 @@ const User = require("../../models/user.model");
 module.exports.dashboard = async (req, res) => {
     const stat = {
         product: {
-            total: await Product.countDocuments(),
-            active: await Product.countDocuments({ status: "available" }),
-            inactive: await Product.countDocuments({ status: "unavailable" }),
+            total: await Product.countDocuments({ deleted: false }),
+            active: await Product.countDocuments({ status: "available", deleted: false }),
+            inactive: await Product.countDocuments({ status: "unavailable", deleted: false }),
         },
         productCategory: {
-            total: await ProductCategory.countDocuments(),
-            active: await ProductCategory.countDocuments({ status: "available" }),
-            inactive: await ProductCategory.countDocuments({ status: "unavailable" }),
+            total: await ProductCategory.countDocuments({ deleted: false }),
+            active: await ProductCategory.countDocuments({ status: "available", deleted: false }),
+            inactive: await ProductCategory.countDocuments({ status: "unavailable", deleted: false }),
         },
         admin: {
-            total: await AdminAccount.countDocuments(),
-            active: await AdminAccount.countDocuments({ status: "available" }),
-            inactive: await AdminAccount.countDocuments({ status: "unavailable" }),
+            total: await AdminAccount.countDocuments({ deleted: false }),
+            active: await AdminAccount.countDocuments({ status: "available", deleted: false }),
+            inactive: await AdminAccount.countDocuments({ status: "unavailable", deleted: false }),
         },
         user: {
-            total: await User.countDocuments(),
-            active: await User.countDocuments({ status: "active" }),
-            inactive: await User.countDocuments({ status: "inactive" }),
+            total: await User.countDocuments({ deleted: false }),
+            active: await User.countDocuments({ status: "active", deleted: false }),
+            inactive: await User.countDocuments({ status: "inactive", deleted: false }),
         }
     }
-
-
 
     res.render("admin/pages/dashboard/index", {
         pageTitle: "Dashboard",

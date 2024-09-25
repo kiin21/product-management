@@ -1,4 +1,5 @@
 const User = require("../../models/user.model");
+const Cart = require("../../models/cart.model");
 const RecoverPassword = require("../../models/recoverPassword.model");
 const md5 = require('md5')
 const generatorHelper = require('../../helpers/generate');
@@ -46,6 +47,16 @@ module.exports.loginPost = async (req, res) => {
         res.redirect('/user/login');
         return;
     }
+
+    const cartID = req.cookies.cartID;
+    await Cart.updateOne(
+        {
+            _id: cartID
+        },
+        {
+            user_id: user._id
+        }
+    )
 
     res.cookie('userToken', user.userToken)
     res.redirect('/');

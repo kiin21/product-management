@@ -310,7 +310,7 @@ header.header {
   border-radius: 8px;
 }
 
-.inner-content {
+.inner-message {
   text-align: center;
 }
 
@@ -511,7 +511,7 @@ body {
 }
 
 .inner-message,
-.inner-content {
+.inner-message {
   padding: 10px 15px;
   border-radius: 18px;
   display: inline-block;
@@ -533,7 +533,7 @@ body {
 }
 
 .inner-outgoing
-  .inner-content {
+  .inner-message {
   background-color: #007bff;
   color: white;
   float: right;

@@ -9,21 +9,18 @@ block main
 
         .row 
             .col-12 
-                .chat 
+                .chat(my-id= user._id) 
                     .inner-body    
-                        .inner-incoming 
-                            .inner-name name1 
-                            .inner-message msg1 
-                        .inner-outgoing
-                            .inner-content Msggggggggggg 
-                        .inner-incoming
-                            .inner-name name2 
-                            .inner-message msg2
-                        .inner-outgoing
-                            .inner-content Msggggggggggg
-                        .inner-incoming
-                            .inner-name name3 
-                            .inner-message msg3
+
+                        for msg in chats
+                            if msg.user._id == user_id
+                                .inner-outgoing
+                                    .inner-message= msg.message
+                            else
+                                .inner-incoming
+                                    .inner-name= msg.user.fullname
+                                    .inner-message= msg.message
+
                     .inner-foot 
                         form(
                             class="inner-form"
@@ -32,11 +29,11 @@ block main
                             input(
                                 type="text"
                                 class="inner-input"
-                                placeholder="Type a message..."
+                                placeholder= "Type a message..."
                             )
-                        button(
-                            type="submit"
-                            class="inner-button"
-                        )
-                            i.fas.fa-paper-plane
+                            button(
+                                type="submit"
+                                class="inner-button"
+                            )
+                                i.fas.fa-paper-plane
 

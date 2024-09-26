@@ -9,6 +9,7 @@ const categoryMiddleware = require('../../middlewares/client/category.middleware
 const cartMiddleware = require('../../middlewares/client/cart.middlewares');
 const userMiddleware = require('../../middlewares/client/user.middlewares');
 const generalSettingMiddleware = require('../../middlewares/client/setting.middlewares');
+const authMiddleware = require('../../middlewares/client/auth.middlewares');
 
 module.exports = (app) => {
     console.log("You are in this client route");
@@ -22,5 +23,5 @@ module.exports = (app) => {
     app.use('/cart', cartRouter);
     app.use('/checkout', checkoutRouter);
     app.use('/user', userRouter);
-    app.use('/chat', chatRouter);
+    app.use('/chat', authMiddleware.requireAuth, chatRouter);
 };

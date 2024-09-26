@@ -1,6 +1,7 @@
 const express = require('express');
-require('dotenv').config();
 const flash = require('express-flash');
+
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT;
@@ -15,6 +16,17 @@ const bodyParser = require('body-parser');
 const database = require('./config/database.js');
 const path = require('path');
 const moment = require('moment');
+const { Server } = require("socket.io");
+const http = require('http');
+
+// socket.io
+const server = http.createServer(app);
+const io = new Server(server);
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
+//end socket.io
+
 
 database.connect();
 
@@ -51,6 +63,6 @@ try {
 }
 
 // Start the server
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

@@ -14,6 +14,13 @@ const prefixAdmin = systemConfig.prefixAdmin;
 
 module.exports = (app) => {
     console.log("You are in this admin route");
+    app.use(prefixAdmin, (req, res, next) => {
+        if (req.path === '/' || req.path === '') {
+            return res.redirect(prefixAdmin + '/dashboard');
+        }
+        next();
+    });
+
     app.use(prefixAdmin + '/dashboard', authMiddleware.requireAuth, dashboardRouter);
     app.use(prefixAdmin + '/products', authMiddleware.requireAuth, productsRouter);
     app.use(prefixAdmin + '/product-category', authMiddleware.requireAuth, productCategoryRouter);
